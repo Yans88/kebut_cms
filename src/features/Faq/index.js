@@ -1,10 +1,10 @@
-import React, { Component, Fragment } from 'react'
-import { connect } from 'react-redux';
-import { fetchData, clearError, confirmDel, closeForm, deleteData, resetForm } from './faqSlice'
+import React, {Component, Fragment} from 'react'
+import {connect} from 'react-redux';
+import {clearError, closeForm, confirmDel, deleteData, fetchData, resetForm} from './faqSlice'
 import ReactDatatable from '@ashvin27/react-datatable';
 import AppModal from '../../components/modal/MyModal';
 import AppButton from '../../components/button/Button';
-import { AppSwalSuccess } from '../../components/modal/SwalSuccess';
+import {AppSwalSuccess} from '../../components/modal/SwalSuccess';
 
 
 class Faq extends Component {
@@ -62,7 +62,7 @@ class Faq extends Component {
     }
 
     handleChange(event) {
-        const { name, value } = event.target
+        const {name, value} = event.target
         var val = value;
         this.props.resetError();
         this.setState({
@@ -76,7 +76,12 @@ class Faq extends Component {
             },
             loadingForm: false
         });
-        if (!this.state.selected.id_operator) this.setState({ selected: { ...this.state.selected, id_operator: this.props.user.id_operator } });
+        if (!this.state.selected.id_operator) this.setState({
+            selected: {
+                ...this.state.selected,
+                id_operator: this.props.user.id_operator
+            }
+        });
     }
 
     discardChanges = async () => {
@@ -93,11 +98,10 @@ class Faq extends Component {
 
     deleteRecord = (record) => {
         this.setState({
-            selected: { ...record, id_operator: this.props.user.id_operator }
+            selected: {...record, id_operator: this.props.user.id_operator}
         });
         this.props.showConfirmDel(true);
     }
-
 
 
     handleDelete() {
@@ -105,7 +109,7 @@ class Faq extends Component {
     }
 
     render() {
-        const { data } = this.props;
+        const {data} = this.props;
         const columns = [
             {
                 key: "no",
@@ -113,7 +117,8 @@ class Faq extends Component {
                 width: 20,
                 align: "center",
                 sortable: false,
-                cell: (row, index) => <div style={{ textAlign: "center" }}>{((this.state.page_number - 1) * this.state.per_page) + index + 1 + '.'}</div>,
+                cell: (row, index) => <div
+                    style={{textAlign: "center"}}>{((this.state.page_number - 1) * this.state.per_page) + index + 1 + '.'}</div>,
                 row: 0
             },
             {
@@ -123,7 +128,7 @@ class Faq extends Component {
                 sortable: true,
                 cell: record => {
                     return (
-                        <div dangerouslySetInnerHTML={{ __html: record.question }} />
+                        <div dangerouslySetInnerHTML={{__html: record.question}}/>
                     )
                 },
             },
@@ -134,7 +139,7 @@ class Faq extends Component {
                 sortable: true,
                 cell: record => {
                     return (
-                        <div dangerouslySetInnerHTML={{ __html: record.answer }} />
+                        <div dangerouslySetInnerHTML={{__html: record.answer}}/>
                     )
                 },
             },
@@ -147,12 +152,12 @@ class Faq extends Component {
                 cell: record => {
 
                     return (
-                        <div style={{ textAlign: "center" }}>
+                        <div style={{textAlign: "center"}}>
                             <Fragment>
                                 <button
                                     className="btn btn-xs btn-success"
                                     onClick={e => this.editRecord(record)}
-                                    style={{ marginRight: '5px' }}>
+                                    style={{marginRight: '5px'}}>
                                     <i className="fa fa-edit"></i> Edit
                                 </button>
                                 <button
@@ -183,7 +188,8 @@ class Faq extends Component {
         }
 
 
-        const contentDelete = <div dangerouslySetInnerHTML={{ __html: '<div id="caption" style="padding-bottom:20px;">Apakah anda yakin <br/>akan menghapus data ini ?</div>' }} />;
+        const contentDelete = <div
+            dangerouslySetInnerHTML={{__html: '<div id="caption" style="padding-bottom:20px;">Apakah anda yakin <br/>akan menghapus data ini ?</div>'}}/>;
         return (
 
             <div className="content-wrapper">
@@ -192,17 +198,20 @@ class Faq extends Component {
                         <div className="row mb-2">
                             <div className="col-sm-6">
                                 <h1 className="m-0">FAQ Members</h1>
-                            </div>{/* /.col */}
+                            </div>
+                            {/* /.col */}
 
-                        </div>{/* /.row */}
-                    </div>{/* /.container-fluid */}
+                        </div>
+                        {/* /.row */}
+                    </div>
+                    {/* /.container-fluid */}
                 </div>
                 <section className="content">
                     <div className="container-fluid">
                         <div className="row">
                             <div className="col-12">
                                 {/* card start */}
-                                <div className="card card-success shadow-lg" style={{ "minHeight": "800px" }}>
+                                <div className="card card-success shadow-lg" style={{"minHeight": "800px"}}>
                                     <div className="card-header card-header-content">
                                         <AppButton
                                             isLoading={this.props.isLoading}
@@ -251,7 +260,7 @@ class Faq extends Component {
                 ></AppModal>
                 {this.props.showFormSuccess ? (<AppSwalSuccess
                     show={this.props.showFormSuccess}
-                    title={<div dangerouslySetInnerHTML={{ __html: this.props.contentMsg }} />}
+                    title={<div dangerouslySetInnerHTML={{__html: this.props.contentMsg}}/>}
                     type={this.props.tipeSWAL}
                     handleClose={this.props.isError ? this.props.closeSwalError : this.handleClose.bind(this)}
                 >
@@ -259,13 +268,13 @@ class Faq extends Component {
             </div>
 
 
-
         )
     }
 }
+
 const mapStateToProps = (state) => ({
     data: state.faq.data || [],
-    totalData:state.faq.totalData,
+    totalData: state.faq.totalData,
     isError: state.faq.isError,
     isLoading: state.faq.isLoading,
     isAddLoading: state.faq.isAddLoading,

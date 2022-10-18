@@ -1,4 +1,4 @@
-import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
+import {createAsyncThunk, createSlice} from '@reduxjs/toolkit';
 import axios from 'axios';
 
 const API_URL = process.env.REACT_APP_URL_API;
@@ -151,7 +151,7 @@ export const transaksiSlice = createSlice({
     name: 'transaksi',
     initialState,
     reducers: {
-        setDriver: (state, { payload }) => {
+        setDriver: (state, {payload}) => {
             state.isLoading = false;
             state.errorPriority = null;
             state.showFormDriver = payload.showFormDriver;
@@ -163,13 +163,13 @@ export const transaksiSlice = createSlice({
             return state;
         },
         closeForm: (state) => {
-            
+
             state.errorPriority = null;
             state.showFormSuccess = false;
         },
     },
     extraReducers: {
-        [fetchData.fulfilled]: (state, { payload }) => {
+        [fetchData.fulfilled]: (state, {payload}) => {
             state.totalData = payload.totalData;
             state.data = payload.data;
             state.isLoading = false;
@@ -177,7 +177,7 @@ export const transaksiSlice = createSlice({
             state.contentMsg = null;
             //return state;
         },
-        [fetchData.rejected]: (state, { payload }) => {
+        [fetchData.rejected]: (state, {payload}) => {
             //console.log('payload', payload);
             state.data = [];
             state.isLoading = false;
@@ -187,7 +187,7 @@ export const transaksiSlice = createSlice({
         [fetchData.pending]: (state) => {
             state.isLoading = true;
         },
-        [fetchDataDetail.fulfilled]: (state, { payload }) => {
+        [fetchDataDetail.fulfilled]: (state, {payload}) => {
             state.dtRes = payload.data;
             state.isLoading = false;
             state.isError = false;
@@ -197,7 +197,7 @@ export const transaksiSlice = createSlice({
         [fetchDataDetail.pending]: (state) => {
             state.isLoading = true;
         },
-        [fetchDataDetail.rejected]: (state, { payload }) => {
+        [fetchDataDetail.rejected]: (state, {payload}) => {
             //console.log('payload', payload);
             state.dtRes = {};
             state.isLoading = false;
@@ -212,7 +212,7 @@ export const transaksiSlice = createSlice({
             state.isAddLoading = false;
             state.contentMsg = "<div style='font-size:20px; text-align:center;'><strong>Success</strong>, Data berhasil diupdate</div>";
         },
-        [assignDriver.rejected]: (state, { payload }) => {
+        [assignDriver.rejected]: (state, {payload}) => {
             console.log(payload);
             state.isAddLoading = payload !== undefined ? payload.isAddLoading : false;
             state.showFormSuccess = payload !== undefined ? payload.showFormSuccess : true;
@@ -228,5 +228,5 @@ export const transaksiSlice = createSlice({
     }
 })
 
-export const { clearError, setDriver, closeForm } = transaksiSlice.actions;
+export const {clearError, setDriver, closeForm} = transaksiSlice.actions;
 export const userSelector = (state) => state.transaksi;

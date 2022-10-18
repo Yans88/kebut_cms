@@ -1,32 +1,32 @@
-import React, { Component } from 'react'
-import { Dropdown, Nav, Sidebar, Sidenav, Icon } from 'rsuite';
-import { connect } from 'react-redux';
-import { Link } from 'react-router-dom';
+import React, {Component} from 'react'
+import {Dropdown, Icon, Nav, Sidebar, Sidenav} from 'rsuite';
+import {connect} from 'react-redux';
+import {Link} from 'react-router-dom';
 
 class MySidebar extends Component {
 
     constructor(props) {
         super(props);
-        this.state = { lastSegmentUrl: "" }
+        this.state = {lastSegmentUrl: ""}
     }
 
     componentDidMount = async () => {
         const location = window.location.href;
         const BaseName = location.substring(location.lastIndexOf("/") + 1);
-        await this.setState({ lastSegmentUrl: BaseName })
+        await this.setState({lastSegmentUrl: BaseName})
     }
 
     handleMenu = async (dt) => {
-        await (this.setState({ lastSegmentUrl: dt }));
+        await (this.setState({lastSegmentUrl: dt}));
     }
 
     render() {
-        const { expandMenu } = this.props.main;
-        const { lastSegmentUrl } = this.state;
+        const {expandMenu} = this.props.main;
+        const {lastSegmentUrl} = this.state;
         return (
             <div>
                 <Sidebar
-                    style={{ display: 'flex', flexDirection: 'column', backgroundColor: 'rgb(31, 30, 30)' }}
+                    style={{display: 'flex', flexDirection: 'column', backgroundColor: 'rgb(31, 30, 30)'}}
                     width={expandMenu ? 230 : 56}
                     collapsible
                 >
@@ -36,7 +36,9 @@ class MySidebar extends Component {
                         //defaultOpenKeys={[`${defaultOpenKeys}`]}
                         appearance="subtle">
                         <Sidenav.Body>
-                            {expandMenu ? (<h5 style={{ textAlign: "center", fontWeight: 600, fontSize: 16 }}>Selamat datang <br />dihalaman Administrator</h5>) :
+                            {expandMenu ? (
+                                    <h5 style={{textAlign: "center", fontWeight: 600, fontSize: 16}}>Selamat datang <br/>dihalaman
+                                        Administrator</h5>) :
                                 ''}
 
                             <Nav>
@@ -47,7 +49,7 @@ class MySidebar extends Component {
                                     eventKey='/'
                                     exact='/'
                                     className={lastSegmentUrl === "/" || lastSegmentUrl === "" || lastSegmentUrl === "cooljek" ? ("my-dropdown my-dropdown-active") : ("my-dropdown")}
-                                    icon={<Icon icon="home" />}>
+                                    icon={<Icon icon="home"/>}>
                                     Home
                                 </Nav.Item>
 
@@ -58,18 +60,18 @@ class MySidebar extends Component {
                                     exact='/members'
                                     eventKey='/members'
                                     className={lastSegmentUrl === "members" ? ("my-dropdown my-dropdown-active") : ("my-dropdown")}
-                                    icon={<Icon icon="people-group" />}>
+                                    icon={<Icon icon="people-group"/>}>
                                     Members
                                 </Nav.Item>
-								
-								<Nav.Item
+
+                                <Nav.Item
                                     onSelect={e => this.handleMenu('drivers')}
                                     componentClass={Link}
                                     to='/drivers'
                                     exact='/drivers'
                                     eventKey='/drivers'
                                     className={lastSegmentUrl === "drivers" ? ("my-dropdown my-dropdown-active") : ("my-dropdown")}
-                                    icon={<Icon icon="people-group" />}>
+                                    icon={<Icon icon="people-group"/>}>
                                     Drivers
                                 </Nav.Item>
 
@@ -80,7 +82,7 @@ class MySidebar extends Component {
                                     exact='/outlets'
                                     eventKey='/outlets'
                                     className={lastSegmentUrl === "outlets" || lastSegmentUrl === "add_outlet" ? ("my-dropdown my-dropdown-active") : ("my-dropdown")}
-                                    icon={<Icon icon="clone" />}>
+                                    icon={<Icon icon="clone"/>}>
                                     Outlets
                                 </Nav.Item>
                                 <Nav.Item
@@ -90,7 +92,7 @@ class MySidebar extends Component {
                                     exact='/cargo'
                                     eventKey='/cargo'
                                     className={lastSegmentUrl === "cargo" || lastSegmentUrl === "add_cargo" || lastSegmentUrl === "asuransi" || lastSegmentUrl === "bongkar_muat" || lastSegmentUrl === "biaya_inap" ? ("my-dropdown my-dropdown-active") : ("my-dropdown")}
-                                    icon={<Icon icon="cube" />}>
+                                    icon={<Icon icon="cube"/>}>
                                     Armada Cargo
                                 </Nav.Item>
 
@@ -99,7 +101,7 @@ class MySidebar extends Component {
                                     eventKey="4"
                                     trigger="hover"
                                     title="Banners"
-                                    icon={<Icon icon="image" />}
+                                    icon={<Icon icon="image"/>}
                                     placement="rightStart"
                                     className={lastSegmentUrl === "banner" || lastSegmentUrl === "banner_cargo" || lastSegmentUrl === "banner_kurir" ? ("my-dropdown my-dropdown-active") : ("my-dropdown")}
                                 >
@@ -109,7 +111,7 @@ class MySidebar extends Component {
                                         to='/banner'
                                         exact='/banner'
                                         className={lastSegmentUrl === "banner" ? ("my-dropdown my-dropdown-active") : ("my-dropdown")}
-                                        icon={<Icon icon="columns" />}
+                                        icon={<Icon icon="columns"/>}
                                         eventKey="4-1"> Home Page
                                     </Dropdown.Item>
                                     <Dropdown.Item
@@ -118,7 +120,7 @@ class MySidebar extends Component {
                                         to='/banner_cargo'
                                         exact='/banner_cargo'
                                         className={lastSegmentUrl === "banner_cargo" ? ("my-dropdown my-dropdown-active") : ("my-dropdown")}
-                                        icon={<Icon icon="logo-dmp" />}
+                                        icon={<Icon icon="logo-dmp"/>}
                                         eventKey="4-2"> Kargo
                                     </Dropdown.Item>
                                     <Dropdown.Item
@@ -127,7 +129,7 @@ class MySidebar extends Component {
                                         to='/banner_kurir'
                                         exact='/banner_kurir'
                                         className={lastSegmentUrl === "banner_kurir" ? ("my-dropdown my-dropdown-active") : ("my-dropdown")}
-                                        icon={<Icon icon="logo-ads" />}
+                                        icon={<Icon icon="logo-ads"/>}
                                         eventKey="4-3"> Kurir
                                     </Dropdown.Item>
                                 </Dropdown>
@@ -136,7 +138,7 @@ class MySidebar extends Component {
                                     eventKey="5"
                                     trigger="hover"
                                     title="Transaksi"
-                                    icon={<Icon icon="shopping-bag" />}
+                                    icon={<Icon icon="shopping-bag"/>}
                                     placement="rightStart"
                                     className={lastSegmentUrl === "waiting_payment" || lastSegmentUrl === "payment" || lastSegmentUrl === "onprocess" || lastSegmentUrl === "completed" || lastSegmentUrl === "expired" ? ("my-dropdown my-dropdown-active") : ("my-dropdown")}
                                 >
@@ -146,25 +148,25 @@ class MySidebar extends Component {
                                         to='/waiting_payment'
                                         exact='/waiting_payment'
                                         className={lastSegmentUrl === "waiting_payment" ? ("my-dropdown my-dropdown-active") : ("my-dropdown")}
-                                        icon={<Icon icon="shopping-basket" />}
+                                        icon={<Icon icon="shopping-basket"/>}
                                         eventKey="5-1"> Waiting Payment
                                     </Dropdown.Item>
-                                    <Dropdown.Item                                        
+                                    <Dropdown.Item
                                         onSelect={e => this.handleMenu('payment')}
                                         componentClass={Link}
                                         to='/payment'
                                         exact='/payment'
                                         className={lastSegmentUrl === "payment" ? ("my-dropdown my-dropdown-active") : ("my-dropdown")}
-                                        icon={<Icon icon="money" />}
+                                        icon={<Icon icon="money"/>}
                                         eventKey="5-2"> Payment Completed
                                     </Dropdown.Item>
-                                    <Dropdown.Item                                        
+                                    <Dropdown.Item
                                         onSelect={e => this.handleMenu('onprocess')}
                                         componentClass={Link}
                                         to='/onprocess'
                                         exact='/onprocess'
                                         className={lastSegmentUrl === "onprocess" ? ("my-dropdown my-dropdown-active") : ("my-dropdown")}
-                                        icon={<Icon icon="refresh" />}
+                                        icon={<Icon icon="refresh"/>}
                                         eventKey="5-3"> On Process
                                     </Dropdown.Item>
                                     <Dropdown.Item
@@ -174,7 +176,7 @@ class MySidebar extends Component {
                                         to='/completed'
                                         exact='/completed'
                                         className={lastSegmentUrl === "completed" ? ("my-dropdown my-dropdown-active") : ("my-dropdown")}
-                                        icon={<Icon icon="check-circle" />}
+                                        icon={<Icon icon="check-circle"/>}
                                         eventKey="5-4"> Completed
                                     </Dropdown.Item>
                                     <Dropdown.Item
@@ -184,7 +186,7 @@ class MySidebar extends Component {
                                         to='/expired'
                                         exact='/expired'
                                         className={lastSegmentUrl === "expired" ? ("my-dropdown my-dropdown-active") : ("my-dropdown")}
-                                        icon={<Icon icon="recycle" />}
+                                        icon={<Icon icon="recycle"/>}
                                         eventKey="4-4"> Expired
                                     </Dropdown.Item>
                                 </Dropdown>
@@ -193,7 +195,7 @@ class MySidebar extends Component {
                                     eventKey="2"
                                     trigger="hover"
                                     title="FAQ"
-                                    icon={<Icon icon="question2" />}
+                                    icon={<Icon icon="question2"/>}
                                     placement="rightStart"
                                     className={lastSegmentUrl === "faq_cust" || lastSegmentUrl === "faq_driver" || lastSegmentUrl === "add_faq" ? ("my-dropdown my-dropdown-active") : ("my-dropdown")}
                                 >
@@ -203,7 +205,7 @@ class MySidebar extends Component {
                                         to='/faq_driver'
                                         exact='/faq_driver'
                                         className={lastSegmentUrl === "faq_driver" ? ("my-dropdown my-dropdown-active") : ("my-dropdown")}
-                                        icon={<Icon icon="address-book" />}
+                                        icon={<Icon icon="address-book"/>}
                                         eventKey="2-1"> Driver
                                     </Dropdown.Item>
                                     <Dropdown.Item
@@ -212,7 +214,7 @@ class MySidebar extends Component {
                                         to='/faq_cust'
                                         exact='/faq_cust'
                                         className={lastSegmentUrl === "faq_cust" ? ("my-dropdown my-dropdown-active") : ("my-dropdown")}
-                                        icon={<Icon icon="address-book-o" />}
+                                        icon={<Icon icon="address-book-o"/>}
                                         eventKey="2-2"> Member
                                     </Dropdown.Item>
                                 </Dropdown>
@@ -221,7 +223,7 @@ class MySidebar extends Component {
                                     eventKey="3"
                                     trigger="hover"
                                     title="Master Data"
-                                    icon={<Icon icon="list-ul" />}
+                                    icon={<Icon icon="list-ul"/>}
                                     placement="rightStart"
                                     className={lastSegmentUrl === "setting" || lastSegmentUrl === "users" || lastSegmentUrl === "level" || lastSegmentUrl === "provinsi" || lastSegmentUrl === "city" || lastSegmentUrl === "kecamatan" || lastSegmentUrl === "kelurahan" || lastSegmentUrl === "mapping_area" ? ("my-dropdown my-dropdown-active") : ("my-dropdown")}
                                 >
@@ -232,7 +234,7 @@ class MySidebar extends Component {
                                         to='/provinsi'
                                         exact='/provinsi'
                                         className={lastSegmentUrl === "provinsi" || lastSegmentUrl === "city" || lastSegmentUrl === "kecamatan" || lastSegmentUrl === "kelurahan" || lastSegmentUrl === "mapping_area" ? ("my-dropdown my-dropdown-active") : ("my-dropdown")}
-                                        icon={<Icon icon="map-marker" />}
+                                        icon={<Icon icon="map-marker"/>}
                                         eventKey="3-4"> Area</Dropdown.Item>
 
                                     <Dropdown.Item
@@ -241,7 +243,7 @@ class MySidebar extends Component {
                                         to='/level'
                                         exact='/level'
                                         className={lastSegmentUrl === "level" ? ("my-dropdown my-dropdown-active") : ("my-dropdown")}
-                                        icon={<Icon icon="peoples-map" />} eventKey="3-1"> Level</Dropdown.Item>
+                                        icon={<Icon icon="peoples-map"/>} eventKey="3-1"> Level</Dropdown.Item>
 
                                     <Dropdown.Item
                                         onSelect={e => this.handleMenu('users')}
@@ -249,7 +251,7 @@ class MySidebar extends Component {
                                         to='/users'
                                         exact='/users'
                                         className={lastSegmentUrl === "users" ? ("my-dropdown my-dropdown-active") : ("my-dropdown")}
-                                        icon={<Icon icon="peoples" />}
+                                        icon={<Icon icon="peoples"/>}
                                         eventKey="3-2"> Users</Dropdown.Item>
                                     <Dropdown.Item
                                         onSelect={e => this.handleMenu('setting')}
@@ -257,7 +259,7 @@ class MySidebar extends Component {
                                         to='/setting'
                                         exact='/setting'
                                         className={lastSegmentUrl === "setting" ? ("my-dropdown my-dropdown-active") : ("my-dropdown")}
-                                        icon={<Icon icon="cog" />}
+                                        icon={<Icon icon="cog"/>}
                                         eventKey="3-3"> Setting
                                     </Dropdown.Item>
                                 </Dropdown>

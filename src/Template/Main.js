@@ -1,11 +1,11 @@
-import React, { Component } from 'react'
-import { Container, Content } from 'rsuite'
-import { MyHeader, MySidebar } from '../Template';
+import React, {Component} from 'react'
+import {Container, Content} from 'rsuite'
+import {MyHeader, MySidebar} from '../Template';
 import moment from 'moment';
 import "moment/locale/id";
-import { connect } from 'react-redux';
-import { onLogout, fetchUserBytoken } from '../features/main/mainSlice'
-import { Redirect } from 'react-router';
+import {connect} from 'react-redux';
+import {fetchUserBytoken, onLogout} from '../features/main/mainSlice'
+import {Redirect} from 'react-router';
 
 const CryptoJS = require("crypto-js");
 const secretKey = process.env.REACT_APP_SECRET_KEY;
@@ -20,9 +20,9 @@ class Main extends Component {
     fetchProfileAdmin = () => {
         const token = localStorage.getItem(tokenLogin);
         var diffMinutes = 400;
-		console.log('main/fetchProfileAdmin');
-		console.log(token);
-        if(token){
+        console.log('main/fetchProfileAdmin');
+        console.log(token);
+        if (token) {
             const dt = CryptoJS.AES.decrypt(token, secretKey);
             const dt_res = dt.toString(CryptoJS.enc.Utf8);
             const _dt = dt_res.split('Þ');
@@ -34,13 +34,13 @@ class Main extends Component {
             this.props.fetchDataAdmin();
         } else {
             this.props.logOut();
-            <Redirect to="/login" />
+            <Redirect to="/login"/>
         }
 
     }
 
     render() {
-        const { children } = this.props;
+        const {children} = this.props;
 
         document.getElementById('root').classList.remove('login-page');
         document.getElementById('root').classList.remove('hold-transition');
@@ -53,7 +53,7 @@ class Main extends Component {
                     <Container>
                         <MyHeader></MyHeader>
                         <Container>
-                            <MySidebar />
+                            <MySidebar/>
                             <Content>
 
                                 {children}
@@ -66,6 +66,7 @@ class Main extends Component {
         )
     }
 }
+
 const mapDispatchToPros = (dispatch) => {
     return {
         fetchDataAdmin: (payload) => {

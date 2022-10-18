@@ -1,9 +1,9 @@
-import React, { Component } from 'react'
-import { connect } from 'react-redux';
-import { fetchData, addData, clearError, closeForm, chgProps } from './settingSlice'
-import { AppSwalSuccess } from '../../components/modal/SwalSuccess';
-import { Placeholder, Alert } from 'rsuite';
-import { Col, Form } from 'react-bootstrap';
+import React, {Component} from 'react'
+import {connect} from 'react-redux';
+import {addData, chgProps, clearError, closeForm, fetchData} from './settingSlice'
+import {AppSwalSuccess} from '../../components/modal/SwalSuccess';
+import {Alert, Placeholder} from 'rsuite';
+import {Col, Form} from 'react-bootstrap';
 import SunEditor from 'suneditor-react';
 import 'suneditor/dist/css/suneditor.min.css';
 import AppButton from '../../components/button/Button';
@@ -19,7 +19,7 @@ class Setting extends Component {
         }
         this.state = {
             cms: 1,
-            errMsg: { email: '' },
+            errMsg: {email: ''},
         }
     }
 
@@ -37,7 +37,7 @@ class Setting extends Component {
     };
 
     handleChange(evt) {
-        this.setState({ errMsg: { email: '' } });
+        this.setState({errMsg: {email: ''}});
         const name = evt.target.name;
         var value = evt.target.value;
         const dt = {};
@@ -62,7 +62,7 @@ class Setting extends Component {
                 errors.email = "Please enter valid email address";
             }
         }
-        this.setState({ errors });
+        this.setState({errors});
         if (this.validateForm(this.state.errMsg)) {
             this.props.onAdd(this.props.data);
         } else {
@@ -86,9 +86,9 @@ class Setting extends Component {
 
 
     render() {
-        const { data } = this.props;
-        const { Paragraph } = Placeholder;
-        const { errMsg } = this.state;
+        const {data} = this.props;
+        const {Paragraph} = Placeholder;
+        const {errMsg} = this.state;
 
         return (
 
@@ -98,25 +98,31 @@ class Setting extends Component {
                         <div className="row mb-2">
                             <div className="col-sm-6">
                                 <h1 className="m-0">Setting</h1>
-                            </div>{/* /.col */}
+                            </div>
+                            {/* /.col */}
 
-                        </div>{/* /.row */}
-                    </div>{/* /.container-fluid */}
+                        </div>
+                        {/* /.row */}
+                    </div>
+                    {/* /.container-fluid */}
                 </div>
                 <section className="content">
                     <div className="container-fluid">
                         <div className="row">
                             <div className="col-12">
                                 {/* card start */}
-                                <div className="card card-success shadow-lg" style={{ "minHeight": "670px" }}>
+                                <div className="card card-success shadow-lg" style={{"minHeight": "670px"}}>
 
                                     <div className="card-body">
-                                        {this.props.isLoading ? (<Paragraph rowHeight={25} rowMargin={30} rows={10} active style={{ marginTop: 30 }} />) : (
+                                        {this.props.isLoading ? (
+                                            <Paragraph rowHeight={25} rowMargin={30} rows={10} active
+                                                       style={{marginTop: 30}}/>) : (
                                             <Form>
                                                 <Form.Row>
                                                     <Form.Group as={Col} controlId="send_mail">
                                                         {errMsg.email ?
-                                                            (<span className="float-right text-error badge badge-danger">{errMsg.email}
+                                                            (<span
+                                                                className="float-right text-error badge badge-danger">{errMsg.email}
                                                             </span>) : ''}
                                                         <Form.Label>Email</Form.Label>
                                                         <Form.Control
@@ -126,7 +132,7 @@ class Setting extends Component {
                                                             size="md"
                                                             name="send_mail"
                                                             type="text"
-                                                            placeholder="Email" />
+                                                            placeholder="Email"/>
                                                     </Form.Group>
 
                                                     <Form.Group as={Col} controlId="mail_pass">
@@ -138,7 +144,7 @@ class Setting extends Component {
                                                             size="md"
                                                             name="mail_pass"
                                                             type="text"
-                                                            placeholder="Password" />
+                                                            placeholder="Password"/>
                                                     </Form.Group>
 
                                                 </Form.Row>
@@ -162,7 +168,7 @@ class Setting extends Component {
                                                     </Form.Group>
                                                 </Form.Row>
 
-                                                <br />
+                                                <br/>
                                                 <Form.Row>
                                                     <Form.Group as={Col} xs={12} controlId="contact_us">
                                                         <Form.Label>Contact us</Form.Label>
@@ -183,7 +189,7 @@ class Setting extends Component {
                                                 </Form.Row>
 
 
-                                                <br />
+                                                <br/>
                                                 <Form.Row>
                                                     <Form.Group as={Col} xs={12} controlId="term_condition">
                                                         <Form.Label>Term and Condition</Form.Label>
@@ -203,7 +209,7 @@ class Setting extends Component {
                                                     </Form.Group>
                                                 </Form.Row>
 
-                                                <br />
+                                                <br/>
                                                 <Form.Row>
                                                     <Form.Group as={Col} xs={12} controlId="term_condition_asuransi">
                                                         <Form.Label>Term and Condition Asuransi</Form.Label>
@@ -223,7 +229,7 @@ class Setting extends Component {
                                                     </Form.Group>
                                                 </Form.Row>
 
-                                                <br />
+                                                <br/>
                                                 <Form.Row>
                                                     <Form.Group as={Col} xs={12} controlId="policy">
                                                         <Form.Label>Policy</Form.Label>
@@ -269,7 +275,7 @@ class Setting extends Component {
 
                 {this.props.showFormSuccess ? (<AppSwalSuccess
                     show={this.props.showFormSuccess}
-                    title={<div dangerouslySetInnerHTML={{ __html: this.props.contentMsg }} />}
+                    title={<div dangerouslySetInnerHTML={{__html: this.props.contentMsg}}/>}
                     type={this.props.tipeSWAL}
                     handleClose={this.props.isError ? this.props.closeSwalError : this.props.closeSwal}
                 >
@@ -277,10 +283,10 @@ class Setting extends Component {
             </div>
 
 
-
         )
     }
 }
+
 const mapStateToProps = (state) => ({
     data: state.settings.data || [],
     isError: state.settings.isError,

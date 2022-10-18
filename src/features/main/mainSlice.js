@@ -1,4 +1,4 @@
-import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
+import {createAsyncThunk, createSlice} from '@reduxjs/toolkit';
 import moment from 'moment';
 import "moment/locale/id";
 
@@ -9,7 +9,7 @@ const API_URL = process.env.REACT_APP_URL_API;
 
 export const loginUser = createAsyncThunk(
     'users/login',
-    async ({ username, pass }, thunkAPI) => {
+    async ({username, pass}, thunkAPI) => {
 
         try {
             const response = await fetch(
@@ -59,8 +59,8 @@ export const fetchUserBytoken = createAsyncThunk(
         var diffMinutes = 0;
         var id_admin = 0;
         var cms = 0;
-		console.log('fetchUserBytoken');
-		console.log(token);
+        console.log('fetchUserBytoken');
+        console.log(token);
         if (token !== "") {
             const dt = CryptoJS.AES.decrypt(token, secretKey);
             const dt_res = dt.toString(CryptoJS.enc.Utf8);
@@ -102,7 +102,7 @@ export const fetchUserBytoken = createAsyncThunk(
                     const _token = id_admin + 'Þ' + name + 'Þ' + tgl;
                     token = CryptoJS.AES.encrypt(_token, secretKey).toString();
                     localStorage.setItem(tokenLogin, token);
-                    return { ...data };
+                    return {...data};
                 } else {
                     return thunkAPI.rejectWithValue(_data);
                 }
@@ -115,7 +115,6 @@ export const fetchUserBytoken = createAsyncThunk(
         }
     }
 );
-
 
 
 const initialState = {
@@ -161,7 +160,7 @@ export const mainSlice = createSlice({
         }
     },
     extraReducers: {
-        [loginUser.fulfilled]: (state, { payload }) => {
+        [loginUser.fulfilled]: (state, {payload}) => {
             state.isFetching = false;
             state.isSuccess = true;
             state.isLoggedIn = !!localStorage.getItem(tokenLogin);
@@ -169,7 +168,7 @@ export const mainSlice = createSlice({
             state.currentUser = payload;
             return state;
         },
-        [loginUser.rejected]: (state, { payload }) => {
+        [loginUser.rejected]: (state, {payload}) => {
             //console.log('payload', payload);
             state.isFetching = false;
             state.isError = true;
@@ -181,7 +180,7 @@ export const mainSlice = createSlice({
         [fetchUserBytoken.pending]: (state) => {
             state.isFetching = true;
         },
-        [fetchUserBytoken.fulfilled]: (state, { payload }) => {
+        [fetchUserBytoken.fulfilled]: (state, {payload}) => {
             state.isFetching = false;
             state.isSuccess = true;
             state.currentUser = payload;
@@ -194,6 +193,6 @@ export const mainSlice = createSlice({
     }
 })
 
-export const { clickExpand, clearState, onLogout, setDefaultOpenKeys } = mainSlice.actions;
+export const {clickExpand, clearState, onLogout, setDefaultOpenKeys} = mainSlice.actions;
 export const userSelector = (state) => state.main;
 //export default mainSlice.reducer;

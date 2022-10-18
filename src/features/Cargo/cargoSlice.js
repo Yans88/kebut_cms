@@ -1,4 +1,4 @@
-import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
+import {createAsyncThunk, createSlice} from '@reduxjs/toolkit';
 import axios from 'axios';
 
 const API_URL = process.env.REACT_APP_URL_API;
@@ -235,12 +235,12 @@ export const cargoSlice = createSlice({
         showConfirmPublish: (state) => {
             state.showFormPublish = true;
         },
-        chgProps: (state, { payload }) => {
+        chgProps: (state, {payload}) => {
             state.dtRes[payload.key] = payload.value;
         },
     },
     extraReducers: {
-        [fetchData.fulfilled]: (state, { payload }) => {
+        [fetchData.fulfilled]: (state, {payload}) => {
             state.dtRes = {};
             state.totalData = payload.totalData;
             state.data = payload.data;
@@ -248,7 +248,7 @@ export const cargoSlice = createSlice({
             state.isError = false;
             //return state;
         },
-        [fetchData.rejected]: (state, { payload }) => {
+        [fetchData.rejected]: (state, {payload}) => {
             state.isLoading = false;
             state.isError = true;
             state.errorMessage = payload !== undefined ? payload.err_msg : null;
@@ -264,7 +264,7 @@ export const cargoSlice = createSlice({
             state.isAddLoading = false;
             state.contentMsg = "<div style='font-size:20px; text-align:center;'><strong>Success</strong>, Data berhasil disimpan</div>";
         },
-        [addData.rejected]: (state, { payload }) => {
+        [addData.rejected]: (state, {payload}) => {
             console.log(payload);
             state.isAddLoading = payload !== undefined ? payload.isAddLoading : false;
             state.showFormSuccess = payload !== undefined ? payload.showFormSuccess : true;
@@ -285,7 +285,7 @@ export const cargoSlice = createSlice({
             state.isAddLoading = false;
             state.contentMsg = "<div style='font-size:20px; text-align:center;'><strong>Success</strong>, Data berhasil dihapus</div>";
         },
-        [deleteData.rejected]: (state, { payload }) => {
+        [deleteData.rejected]: (state, {payload}) => {
             state.isAddLoading = payload !== undefined ? payload.isAddLoading : false;
             state.showFormSuccess = payload !== undefined ? payload.showFormSuccess : true;
             state.showFormDelete = payload !== undefined ? payload.showFormDelete : false;
@@ -297,7 +297,7 @@ export const cargoSlice = createSlice({
         [deleteData.pending]: (state) => {
             state.isAddLoading = true;
         },
-        [fetchDataDetail.fulfilled]: (state, { payload }) => {
+        [fetchDataDetail.fulfilled]: (state, {payload}) => {
             state.dtRes = payload.data;
             state.isLoading = false;
             state.isError = false;
@@ -307,7 +307,7 @@ export const cargoSlice = createSlice({
         [fetchDataDetail.pending]: (state) => {
             state.isLoading = true;
         },
-        [fetchDataDetail.rejected]: (state, { payload }) => {
+        [fetchDataDetail.rejected]: (state, {payload}) => {
             //console.log('payload', payload);
             state.dtRes = {};
             state.isLoading = false;
@@ -317,6 +317,6 @@ export const cargoSlice = createSlice({
     }
 })
 
-export const { showConfirmPublish, clearError, confirmDel, closeForm, chgProps } = cargoSlice.actions;
+export const {showConfirmPublish, clearError, confirmDel, closeForm, chgProps} = cargoSlice.actions;
 export const userSelector = (state) => state.cargo;
 //export default mainSlice.reducer;

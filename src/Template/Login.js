@@ -1,13 +1,13 @@
-import React, { useEffect } from 'react';
-import { useHistory } from 'react-router-dom';
-import { useFormik } from 'formik';
+import React, {useEffect} from 'react';
+import {useHistory} from 'react-router-dom';
+import {useFormik} from 'formik';
 import * as Yup from 'yup';
-import { useDispatch, useSelector } from 'react-redux';
-import { loginUser, userSelector, clearState } from '../features/main/mainSlice'
+import {useDispatch, useSelector} from 'react-redux';
+import {clearState, loginUser, userSelector} from '../features/main/mainSlice'
 import Button from '../components/button/Button';
 
 const Login = () => {
-    const { isFetching, isSuccess, errorMessage } = useSelector(
+    const {isFetching, isSuccess, errorMessage} = useSelector(
         userSelector
     );
     const history = useHistory();
@@ -40,7 +40,9 @@ const Login = () => {
         }
     });
 
-    const hideAlert = () => { dispatch(clearState()) }
+    const hideAlert = () => {
+        dispatch(clearState())
+    }
     document.getElementById('root').classList = 'hold-transition login-page';
 
     return (
@@ -53,7 +55,9 @@ const Login = () => {
 
                     {errorMessage ? (
                         <div className="alert alert-danger alert-sm">
-                            <button onClick={hideAlert} type="button" className="close" data-dismiss="alert" aria-hidden="true">×</button>
+                            <button onClick={hideAlert} type="button" className="close" data-dismiss="alert"
+                                    aria-hidden="true">×
+                            </button>
                             <span className="fw-semi-bold text-error-login">Error: {errorMessage}</span>
                         </div>
                     ) : (<p className='login-box-msg'>Sign in to start your session</p>)}
@@ -72,14 +76,14 @@ const Login = () => {
                                 {...formik.getFieldProps('username')} />
                             <div className="input-group-append">
                                 <div className="input-group-text">
-                                    <span className="fas fa-user" />
+                                    <span className="fas fa-user"/>
                                 </div>
                             </div>
 
                         </div>
 
                         {formik.touched.pass &&
-                            formik.errors.pass ? (
+                        formik.errors.pass ? (
                             <span className="float-right text-error badge badge-danger">{formik.errors.pass}</span>
                         ) : null}
                         <div className="input-group mb-3">
@@ -91,7 +95,7 @@ const Login = () => {
                                 {...formik.getFieldProps('pass')} />
                             <div className="input-group-append">
                                 <div className="input-group-text">
-                                    <span className="fas fa-lock" />
+                                    <span className="fas fa-lock"/>
                                 </div>
                             </div>
                         </div>

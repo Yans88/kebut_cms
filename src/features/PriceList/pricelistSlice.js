@@ -1,4 +1,4 @@
-import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
+import {createAsyncThunk, createSlice} from '@reduxjs/toolkit';
 import axios from 'axios';
 
 const API_URL = process.env.REACT_APP_URL_API;
@@ -18,7 +18,7 @@ export const fetchData = createAsyncThunk(
                     res = {
                         data: data,
                         totalData: dataa.total_data,
-                        nama_cargo: dataa.nama_cargo,                        
+                        nama_cargo: dataa.nama_cargo,
                     }
                     return res;
                 } else {
@@ -102,7 +102,7 @@ export const pricelistSlice = createSlice({
     name: 'pricelists',
     initialState,
     reducers: {
-        setData: (state, { payload }) => {
+        setData: (state, {payload}) => {
             state.data = payload;
             return state;
         },
@@ -116,15 +116,15 @@ export const pricelistSlice = createSlice({
         },
     },
     extraReducers: {
-        [fetchData.fulfilled]: (state, { payload }) => {
+        [fetchData.fulfilled]: (state, {payload}) => {
             state.totalData = payload.totalData;
             state.data = payload.data;
-            state.namaCargo = payload.nama_cargo;           
+            state.namaCargo = payload.nama_cargo;
             state.isLoading = false;
             state.isError = false;
             //return state;
         },
-        [fetchData.rejected]: (state, { payload }) => {
+        [fetchData.rejected]: (state, {payload}) => {
             //console.log('payload', payload);
             state.isLoading = false;
             state.isError = true;
@@ -148,5 +148,5 @@ export const pricelistSlice = createSlice({
     }
 })
 
-export const { setData, addForm, closeForm } = pricelistSlice.actions;
+export const {setData, addForm, closeForm} = pricelistSlice.actions;
 export const userSelector = (state) => state.pricelists;

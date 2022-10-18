@@ -1,9 +1,9 @@
-import React, { Component } from 'react'
-import { Dropdown, Header, Icon, Nav, Navbar } from 'rsuite'
-import { connect } from 'react-redux';
-import { clickExpand, onLogout, setDefaultOpenKeys, fetchUserBytoken } from '../features/main/mainSlice'
-import { Redirect } from 'react-router';
-import { Link } from 'react-router-dom';
+import React, {Component} from 'react'
+import {Dropdown, Header, Icon, Nav, Navbar} from 'rsuite'
+import {connect} from 'react-redux';
+import {clickExpand, fetchUserBytoken, onLogout, setDefaultOpenKeys} from '../features/main/mainSlice'
+import {Redirect} from 'react-router';
+import {Link} from 'react-router-dom';
 import moment from 'moment';
 import "moment/locale/id";
 
@@ -20,9 +20,9 @@ class MyHeader extends Component {
     fetchProfileAdmin = () => {
         const token = localStorage.getItem(tokenLogin);
         var diffMinutes = 400;
-		console.log('header/fetchProfileAdmin');
-		console.log(token);
-        if(token){
+        console.log('header/fetchProfileAdmin');
+        console.log(token);
+        if (token) {
             const dt = CryptoJS.AES.decrypt(token, secretKey);
             const dt_res = dt.toString(CryptoJS.enc.Utf8);
             const _dt = dt_res.split('Þ');
@@ -34,7 +34,7 @@ class MyHeader extends Component {
 
         } else {
             this.props.logOut();
-            <Redirect to="/login" />
+            <Redirect to="/login"/>
         }
 
     }
@@ -42,10 +42,12 @@ class MyHeader extends Component {
     handleToggle() {
         this.props.onClickExpand();
     }
+
     handleLogout() {
         this.props.logOut();
-        <Redirect to="/login" />
+        <Redirect to="/login"/>
     }
+
     render() {
 
         return (
@@ -57,13 +59,16 @@ class MyHeader extends Component {
                     </Navbar.Header>
                     <Navbar.Body>
                         <Nav>
-                            <Nav.Item icon={<Icon icon="bars" />} onClick={this.handleToggle.bind(this)} className="drawwer"></Nav.Item>
+                            <Nav.Item icon={<Icon icon="bars"/>} onClick={this.handleToggle.bind(this)}
+                                      className="drawwer"></Nav.Item>
                         </Nav>
 
                         <Nav pullRight>
 
-                            <Dropdown className="show dr-logout" icon={<Icon icon="user-o" size="lg" />} title={this.props.user.name ? (this.props.user.name) : ("Account")}>
-                                <Dropdown.Item onClick={this.handleLogout.bind(this)} className="dropdown-menuu" icon={<Icon icon="sign-out" />}>Logout</Dropdown.Item>
+                            <Dropdown className="show dr-logout" icon={<Icon icon="user-o" size="lg"/>}
+                                      title={this.props.user.name ? (this.props.user.name) : ("Account")}>
+                                <Dropdown.Item onClick={this.handleLogout.bind(this)} className="dropdown-menuu"
+                                               icon={<Icon icon="sign-out"/>}>Logout</Dropdown.Item>
 
                             </Dropdown>
                         </Nav>
@@ -77,6 +82,7 @@ class MyHeader extends Component {
         )
     }
 }
+
 const mapDispatchToPros = (dispatch) => {
     return {
         onClickExpand: () => {

@@ -1,4 +1,4 @@
-import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
+import {createAsyncThunk, createSlice} from '@reduxjs/toolkit';
 import axios from 'axios';
 
 const API_URL = process.env.REACT_APP_URL_API;
@@ -107,7 +107,7 @@ export const mappingAreaSlice = createSlice({
     name: 'mappingArea',
     initialState,
     reducers: {
-        setData: (state, { payload }) => {
+        setData: (state, {payload}) => {
             state.data = payload;
             return state;
         },
@@ -115,7 +115,7 @@ export const mappingAreaSlice = createSlice({
 
     },
     extraReducers: {
-        [fetchData.fulfilled]: (state, { payload }) => {
+        [fetchData.fulfilled]: (state, {payload}) => {
             state.totalData = payload.totalData;
             state.data = payload.data;
             state.provinsi_name = payload.provinsi_name;
@@ -126,7 +126,7 @@ export const mappingAreaSlice = createSlice({
             state.isError = false;
             //return state;
         },
-        [fetchData.rejected]: (state, { payload }) => {
+        [fetchData.rejected]: (state, {payload}) => {
             //console.log('payload', payload);
             state.isLoading = false;
             state.isError = true;
@@ -150,5 +150,5 @@ export const mappingAreaSlice = createSlice({
     }
 })
 
-export const { setData } = mappingAreaSlice.actions;
+export const {setData} = mappingAreaSlice.actions;
 export const userSelector = (state) => state.mappingArea;

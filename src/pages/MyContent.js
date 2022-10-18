@@ -1,4 +1,4 @@
-import React, { Component } from 'react'
+import React, {Component} from 'react'
 
 
 export default class MyContent extends Component {
@@ -11,17 +11,20 @@ export default class MyContent extends Component {
                         <div className="row mb-2">
                             <div className="col-sm-6">
                                 <h1 className="m-0">MyContent</h1>
-                            </div>{/* /.col */}
+                            </div>
+                            {/* /.col */}
 
-                        </div>{/* /.row */}
-                    </div>{/* /.container-fluid */}
+                        </div>
+                        {/* /.row */}
+                    </div>
+                    {/* /.container-fluid */}
                 </div>
                 <section className="content">
                     <div className="container-fluid">
                         <div className="row">
                             <div className="col-12">
                                 {/* card start */}
-                                <div className="card card-success shadow-lg" style={{ "minHeight": "470px" }}>
+                                <div className="card card-success shadow-lg" style={{"minHeight": "470px"}}>
                                     <div className="card-body">
 
 
@@ -33,7 +36,6 @@ export default class MyContent extends Component {
                     </div>
                 </section>
             </div>
-
 
 
         )

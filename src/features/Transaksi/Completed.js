@@ -1,6 +1,6 @@
-import React, { Component, Fragment } from 'react'
-import { connect } from 'react-redux';
-import { fetchData } from './transaksiSlice'
+import React, {Component, Fragment} from 'react'
+import {connect} from 'react-redux';
+import {fetchData} from './transaksiSlice'
 import ReactDatatable from '@ashvin27/react-datatable';
 import NumberFormat from 'react-number-format';
 import moment from 'moment';
@@ -54,7 +54,7 @@ class Completed extends Component {
     }
 
     render() {
-        const { data } = this.props;
+        const {data} = this.props;
         const columns = [
             {
                 key: "no",
@@ -62,7 +62,8 @@ class Completed extends Component {
                 width: 20,
                 align: "center",
                 sortable: false,
-                cell: (row, index) => <div style={{ textAlign: "center" }}>{((this.state.page_number - 1) * this.state.per_page) + index + 1 + '.'}</div>,
+                cell: (row, index) => <div
+                    style={{textAlign: "center"}}>{((this.state.page_number - 1) * this.state.per_page) + index + 1 + '.'}</div>,
                 row: 0
             },
             {
@@ -101,7 +102,7 @@ class Completed extends Component {
                 align: "center",
                 sortable: true,
                 cell: record => {
-                    return (<div style={{ textAlign: "right" }}><Fragment>
+                    return (<div style={{textAlign: "right"}}><Fragment>
                         <NumberFormat
                             value={record.ttl_biaya}
                             thousandSeparator={true}
@@ -137,17 +138,20 @@ class Completed extends Component {
                         <div className="row mb-2">
                             <div className="col-sm-6">
                                 <h1 className="m-0">Transaksi</h1>
-                            </div>{/* /.col */}
+                            </div>
+                            {/* /.col */}
 
-                        </div>{/* /.row */}
-                    </div>{/* /.container-fluid */}
+                        </div>
+                        {/* /.row */}
+                    </div>
+                    {/* /.container-fluid */}
                 </div>
                 <section className="content">
                     <div className="container-fluid">
                         <div className="row">
                             <div className="col-12">
                                 {/* card start */}
-                                <div className="card card-success shadow-lg" style={{ "minHeight": "800px" }}>
+                                <div className="card card-success shadow-lg" style={{"minHeight": "800px"}}>
                                     <div className="card-header card-header-content">
                                         <h1 className="card-title card-title-custom">Completed</h1>
                                     </div>
@@ -178,10 +182,10 @@ class Completed extends Component {
             </div>
 
 
-
         )
     }
 }
+
 const mapStateToProps = (state) => ({
     data: state.transaksi.data || [],
     isError: state.transaksi.isError,

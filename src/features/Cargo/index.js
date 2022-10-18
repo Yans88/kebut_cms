@@ -1,12 +1,12 @@
-import React, { Component, Fragment } from 'react'
-import { Figure } from 'react-bootstrap';
-import { connect } from 'react-redux';
-import { fetchData, clearError, confirmDel, closeForm, deleteData } from './cargoSlice'
+import React, {Component, Fragment} from 'react'
+import {Figure} from 'react-bootstrap';
+import {connect} from 'react-redux';
+import {clearError, closeForm, confirmDel, deleteData, fetchData} from './cargoSlice'
 import ReactDatatable from '@ashvin27/react-datatable';
 import AppModal from '../../components/modal/MyModal';
 import AppButton from '../../components/button/Button';
-import { AppSwalSuccess } from '../../components/modal/SwalSuccess';
-import { BsHeartFill, BsLayersHalf, BsNewspaper } from "react-icons/bs";
+import {AppSwalSuccess} from '../../components/modal/SwalSuccess';
+import {BsHeartFill, BsLayersHalf, BsNewspaper} from "react-icons/bs";
 
 class Cargo extends Component {
     constructor(props) {
@@ -90,7 +90,7 @@ class Cargo extends Component {
 
     deleteRecord = (record) => {
         this.setState({
-            selected: { ...record, id_operator: this.props.user.id_operator }
+            selected: {...record, id_operator: this.props.user.id_operator}
         });
         this.props.showConfirmDel(true);
     }
@@ -100,7 +100,7 @@ class Cargo extends Component {
     }
 
     render() {
-        const { data } = this.props;
+        const {data} = this.props;
 
         const columns = [
             {
@@ -109,7 +109,8 @@ class Cargo extends Component {
                 width: 20,
                 align: "center",
                 sortable: false,
-                cell: (row, index) => <div style={{ textAlign: "center" }}>{((this.state.page_number - 1) * this.state.per_page) + index + 1 + '.'}</div>,
+                cell: (row, index) => <div
+                    style={{textAlign: "center"}}>{((this.state.page_number - 1) * this.state.per_page) + index + 1 + '.'}</div>,
                 row: 0
             },
             {
@@ -126,9 +127,10 @@ class Cargo extends Component {
                 sortable: false,
                 cell: record => {
                     return (<Fragment>
-                        P x L x T : {record.panjang ? record.panjang : '0'} x {record.lebar ? record.lebar : '0'} x {record.tinggi ? record.tinggi : '0'}<br />
-                        Volume : {record.volume ? record.volume : '-'}<br />
-                        Kapasitas : {record.kap ? record.kap : '-'} Kg<br />
+                        P x L x T
+                        : {record.panjang ? record.panjang : '0'} x {record.lebar ? record.lebar : '0'} x {record.tinggi ? record.tinggi : '0'}<br/>
+                        Volume : {record.volume ? record.volume : '-'}<br/>
+                        Kapasitas : {record.kap ? record.kap : '-'} Kg<br/>
                     </Fragment>)
                 }
             },
@@ -140,7 +142,7 @@ class Cargo extends Component {
                 sortable: false,
                 cell: record => {
                     return (<Fragment>
-                        Toll : {record.golongan_tol ? record.golongan_tol : '-'}<br />
+                        Toll : {record.golongan_tol ? record.golongan_tol : '-'}<br/>
                         Ferry : {record.golongan_ferry ? record.golongan_ferry : '-'}
                     </Fragment>)
                 }
@@ -153,7 +155,7 @@ class Cargo extends Component {
                 sortable: false,
                 cell: record => {
                     return (
-                        <div style={{ textAlign: "center" }}>
+                        <div style={{textAlign: "center"}}>
                             <Figure>
                                 <Figure.Image
                                     thumbnail
@@ -175,36 +177,36 @@ class Cargo extends Component {
                 sortable: false,
                 cell: record => {
                     return (
-                        <div style={{ textAlign: "center" }}>
+                        <div style={{textAlign: "center"}}>
                             <Fragment>
-                                <button                                    
+                                <button
                                     className="btn btn-xs btn-info"
                                     onClick={e => this.listOngkir(record)}
-                                    style={{ marginBottom: '3px', width: 110 }}>
-                                    <BsNewspaper /> Ongkos Kirim
+                                    style={{marginBottom: '3px', width: 110}}>
+                                    <BsNewspaper/> Ongkos Kirim
                                 </button>
-                                <button                                    
+                                <button
                                     className="btn btn-xs btn-success"
                                     onClick={e => this.listBM(record)}
-                                    style={{ marginBottom: '3px', width: 110 }}>
-                                    <BsLayersHalf /> Bongkar Muat
+                                    style={{marginBottom: '3px', width: 110}}>
+                                    <BsLayersHalf/> Bongkar Muat
                                 </button>
-                                <button                                    
+                                <button
                                     className="btn btn-xs btn-warning"
                                     onClick={e => this.listBi(record)}
-                                    style={{ marginBottom: '3px', width: 110 }}>
-                                    <BsHeartFill /> Biaya Inap
+                                    style={{marginBottom: '3px', width: 110}}>
+                                    <BsHeartFill/> Biaya Inap
                                 </button>
                                 <button
                                     className="btn btn-xs btn-info"
                                     onClick={e => this.listAsuransi(record)}
-                                    style={{ marginBottom: '3px', width: 110 }}>
-                                    <BsHeartFill /> Asuransi
+                                    style={{marginBottom: '3px', width: 110}}>
+                                    <BsHeartFill/> Asuransi
                                 </button>
                                 <button
                                     className="btn btn-xs btn-success"
                                     onClick={e => this.discardChanges(record)}
-                                    style={{ marginRight: '2px' }}>
+                                    style={{marginRight: '2px'}}>
                                     <i className="fa fa-edit"></i> Edit
                                 </button>
                                 <button
@@ -237,7 +239,8 @@ class Cargo extends Component {
         }
 
 
-        const contentDelete = <div dangerouslySetInnerHTML={{ __html: '<div id="caption" style="padding-bottom:20px;">Apakah anda yakin <br/>akan menghapus data ini ?</div>' }} />;
+        const contentDelete = <div
+            dangerouslySetInnerHTML={{__html: '<div id="caption" style="padding-bottom:20px;">Apakah anda yakin <br/>akan menghapus data ini ?</div>'}}/>;
 
         return (
 
@@ -247,17 +250,20 @@ class Cargo extends Component {
                         <div className="row mb-2">
                             <div className="col-sm-6">
                                 <h1 className="m-0">Kargo</h1>
-                            </div>{/* /.col */}
+                            </div>
+                            {/* /.col */}
 
-                        </div>{/* /.row */}
-                    </div>{/* /.container-fluid */}
+                        </div>
+                        {/* /.row */}
+                    </div>
+                    {/* /.container-fluid */}
                 </div>
                 <section className="content">
                     <div className="container-fluid">
                         <div className="row">
                             <div className="col-12">
                                 {/* card start */}
-                                <div className="card card-success shadow-lg" style={{ "minHeight": "800px" }}>
+                                <div className="card card-success shadow-lg" style={{"minHeight": "800px"}}>
                                     <div className="card-header card-header-content">
                                         <AppButton
                                             isLoading={this.props.isLoading}
@@ -306,7 +312,7 @@ class Cargo extends Component {
                 ></AppModal>
                 {this.props.showFormSuccess ? (<AppSwalSuccess
                     show={this.props.showFormSuccess}
-                    title={<div dangerouslySetInnerHTML={{ __html: this.props.contentMsg }} />}
+                    title={<div dangerouslySetInnerHTML={{__html: this.props.contentMsg}}/>}
                     type={this.props.tipeSWAL}
                     handleClose={this.props.isError ? this.props.closeSwalError : this.props.closeSwal}
                 >
@@ -314,13 +320,13 @@ class Cargo extends Component {
             </div>
 
 
-
         )
     }
 }
+
 const mapStateToProps = (state) => ({
     data: state.cargo.data || [],
-    totalData:state.cargo.totalData,
+    totalData: state.cargo.totalData,
     isError: state.cargo.isError,
     isAddLoading: state.cargo.isAddLoading,
     isLoading: state.cargo.isLoading,

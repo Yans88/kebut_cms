@@ -1,12 +1,12 @@
-import React, { Component } from 'react'
-import { connect } from 'react-redux';
-import { fetchDataById, addData, clearError, closeForm, chgProps, resetForm } from './faqSlice'
+import React, {Component} from 'react'
+import {connect} from 'react-redux';
+import {addData, chgProps, clearError, closeForm, fetchDataById, resetForm} from './faqSlice'
 import SunEditor from 'suneditor-react';
 import 'suneditor/dist/css/suneditor.min.css';
 import AppButton from '../../components/button/Button';
-import { AppSwalSuccess } from '../../components/modal/SwalSuccess';
-import { Placeholder, Alert } from 'rsuite';
-import { Col, Form } from 'react-bootstrap';
+import {AppSwalSuccess} from '../../components/modal/SwalSuccess';
+import {Alert, Placeholder} from 'rsuite';
+import {Col, Form} from 'react-bootstrap';
 
 class FaqForm extends Component {
 
@@ -31,26 +31,26 @@ class FaqForm extends Component {
         const tipe = sessionStorage.getItem('tipe');
         const idOP = sessionStorage.getItem('idOP');
         if (selectedId > 0) {
-            const param = { id_faq: selectedId }
+            const param = {id_faq: selectedId}
             this.props.onLoad(param);
         }
         if (tipe > 0) {
-            const dt = { key: "tipe", value: tipe };
+            const dt = {key: "tipe", value: tipe};
             this.props.changeProps(dt);
         }
         if (idOP > 0) {
-            const dt = { key: "id_operator", value: idOP };
+            const dt = {key: "id_operator", value: idOP};
             this.props.changeProps(dt);
         }
     }
 
     handleSubmit() {
-        const dt = { key: "id_operator", value: this.props.user.id_operator };
+        const dt = {key: "id_operator", value: this.props.user.id_operator};
         this.props.changeProps(dt);
         var errors = this.state.errMsg;
         errors.answer = !this.props.data.answer ? "Answer required" : '';
         errors.question = !this.props.data.answer ? "Question required" : '';
-        this.setState({ errors });
+        this.setState({errors});
         if (this.validateForm(this.state.errMsg)) {
             this.props.onAdd(this.props.data);
         } else {
@@ -76,7 +76,7 @@ class FaqForm extends Component {
     };
 
     handleChangeDesk(name, value) {
-        const dt = { key: "id_operator", value: this.props.user.id_operator };
+        const dt = {key: "id_operator", value: this.props.user.id_operator};
         name === 'answer' && this.props.changeProps(dt);
         dt['key'] = name;
         dt['value'] = value;
@@ -84,8 +84,8 @@ class FaqForm extends Component {
     }
 
     render() {
-        const { data } = this.props;
-        const { Paragraph } = Placeholder;
+        const {data} = this.props;
+        const {Paragraph} = Placeholder;
 
         return (
 
@@ -95,22 +95,27 @@ class FaqForm extends Component {
                         <div className="row mb-2">
                             <div className="col-sm-6">
                                 <h1 className="m-0">Add/Edit FAQ</h1>
-                            </div>{/* /.col */}
+                            </div>
+                            {/* /.col */}
 
-                        </div>{/* /.row */}
-                    </div>{/* /.container-fluid */}
+                        </div>
+                        {/* /.row */}
+                    </div>
+                    {/* /.container-fluid */}
                 </div>
                 <section className="content">
                     <div className="container-fluid">
                         <div className="row">
                             <div className="col-12">
                                 {/* card start */}
-                                <div className="card card-success shadow-lg" style={{ "minHeight": "800px" }}>
+                                <div className="card card-success shadow-lg" style={{"minHeight": "800px"}}>
 
                                     <div className="card-body">
-                                        {this.props.isLoading ? (<Paragraph rowHeight={25} rowMargin={30} rows={10} active style={{ marginTop: 30 }} />) : (
+                                        {this.props.isLoading ? (
+                                            <Paragraph rowHeight={25} rowMargin={30} rows={10} active
+                                                       style={{marginTop: 30}}/>) : (
 
-                                            <Form style={{ marginTop: 20 }}>
+                                            <Form style={{marginTop: 20}}>
                                                 <Form.Row>
                                                     <Form.Group as={Col} xs={6} controlId="question">
                                                         <Form.Label>Question</Form.Label>
@@ -154,7 +159,10 @@ class FaqForm extends Component {
                                                     theme="success">
                                                     Simpan
                                                 </AppButton>
-                                                <button style={{ marginRight: 5 }} type="button" onClick={() => this.props.history.goBack()} className="float-right btn btn-danger">Back</button>
+                                                <button style={{marginRight: 5}} type="button"
+                                                        onClick={() => this.props.history.goBack()}
+                                                        className="float-right btn btn-danger">Back
+                                                </button>
 
                                             </Form>
                                         )}
@@ -168,7 +176,7 @@ class FaqForm extends Component {
                 </section>
                 {this.props.showFormSuccess ? (<AppSwalSuccess
                     show={this.props.showFormSuccess}
-                    title={<div dangerouslySetInnerHTML={{ __html: this.props.contentMsg }} />}
+                    title={<div dangerouslySetInnerHTML={{__html: this.props.contentMsg}}/>}
                     type={this.props.tipeSWAL}
                     handleClose={this.props.isError ? this.props.closeSwalError : this.handleClose.bind(this)}
                 >
@@ -177,6 +185,7 @@ class FaqForm extends Component {
         )
     }
 }
+
 const mapStateToProps = (state) => ({
     data: state.faq.dataId || {},
     isError: state.faq.isError,

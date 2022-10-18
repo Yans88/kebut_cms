@@ -1,10 +1,10 @@
-import React, { Component, Fragment } from 'react'
-import { Form } from 'react-bootstrap';
-import { connect } from 'react-redux';
-import { fetchData, addData, setData, addForm, closeForm } from './pricelistSlice'
+import React, {Component, Fragment} from 'react'
+import {Form} from 'react-bootstrap';
+import {connect} from 'react-redux';
+import {addData, addForm, closeForm, fetchData, setData} from './pricelistSlice'
 import ReactDatatable from '@ashvin27/react-datatable';
 import NumberFormat from 'react-number-format';
-import { Link } from 'react-router-dom';
+import {Link} from 'react-router-dom';
 import AppModal from '../../components/modal/MyModal';
 
 class PriceList extends Component {
@@ -45,7 +45,7 @@ class PriceList extends Component {
                 id_ac: selectedId
             }
         });
-        const queryString = { ...this.state, id_ac: selectedId }
+        const queryString = {...this.state, id_ac: selectedId}
         this.props.onLoad(queryString);
     };
 
@@ -94,9 +94,9 @@ class PriceList extends Component {
         this.props.onAdd(param);
         dt.map((x, key) => {
             if (x.id_mapping === record.id_mapping) {
-                _dt = { ...x, status: !this.props.isError ? isActive : record.status }
+                _dt = {...x, status: !this.props.isError ? isActive : record.status}
             } else {
-                _dt = { ...x };
+                _dt = {...x};
             }
             dtt[key] = _dt;
             return dtt;
@@ -105,7 +105,7 @@ class PriceList extends Component {
     }
 
     handleChange(event) {
-        const { name, value } = event.target
+        const {name, value} = event.target
         this.setState({
             selected: {
                 ...this.state.selected,
@@ -113,14 +113,19 @@ class PriceList extends Component {
             }
         });
 
-        if (!this.state.selected.id_operator) this.setState({ selected: { ...this.state.selected, id_operator: this.props.user.id_operator } });
+        if (!this.state.selected.id_operator) this.setState({
+            selected: {
+                ...this.state.selected,
+                id_operator: this.props.user.id_operator
+            }
+        });
     }
 
     editHrg = async (record) => {
         this.setState({
             loadingForm: false,
             errMsg: this.initSelected,
-            selected: { ...record, id_operator: this.props.user.id_operator }
+            selected: {...record, id_operator: this.props.user.id_operator}
         });
         this.props.showForm(true);
     }
@@ -132,9 +137,9 @@ class PriceList extends Component {
         this.props.onAdd(this.state.selected);
         dt.map((x, key) => {
             if (x.id_mapping === this.state.selected.id_mapping && !this.props.isError) {
-                _dt = { ...x, hrg: this.state.selected.hrg }
+                _dt = {...x, hrg: this.state.selected.hrg}
             } else {
-                _dt = { ...x };
+                _dt = {...x};
             }
             dtt[key] = _dt;
             return dtt;
@@ -149,8 +154,8 @@ class PriceList extends Component {
 
     render() {
 
-        const { data, namaCargo } = this.props;
-        const { selected } = this.state;
+        const {data, namaCargo} = this.props;
+        const {selected} = this.state;
         const columns = [
             {
                 key: "no",
@@ -158,7 +163,8 @@ class PriceList extends Component {
                 width: 20,
                 align: "center",
                 sortable: false,
-                cell: (row, index) => <div style={{ textAlign: "center" }}>{((this.state.page_number - 1) * this.state.per_page) + index + 1 + '.'}</div>,
+                cell: (row, index) => <div
+                    style={{textAlign: "center"}}>{((this.state.page_number - 1) * this.state.per_page) + index + 1 + '.'}</div>,
                 row: 0
             },
             {
@@ -202,8 +208,9 @@ class PriceList extends Component {
                 sortable: true,
                 width: 70,
                 cell: record => {
-                    return (<div style={{ textAlign: "right" }}><Fragment>
-                        <Link to="#" onClick={(e) => this.editHrg(record)} className={record.hrg ? "link_pricelist" : "link_pricelist_n"}>
+                    return (<div style={{textAlign: "right"}}><Fragment>
+                        <Link to="#" onClick={(e) => this.editHrg(record)}
+                              className={record.hrg ? "link_pricelist" : "link_pricelist_n"}>
                             {record.hrg ? (
                                 <NumberFormat
                                     value={record.hrg}
@@ -211,7 +218,7 @@ class PriceList extends Component {
                                     decimalScale={2}
                                     displayType={'text'}
                                 />
-                            ) : <div style={{ color: '#CB4335', fontWeight: 500 }}>Set harga</div>}
+                            ) : <div style={{color: '#CB4335', fontWeight: 500}}>Set harga</div>}
                         </Link>
                     </Fragment></div>)
                 }
@@ -224,7 +231,7 @@ class PriceList extends Component {
                 sortable: false,
                 cell: record => {
                     return (
-                        <div style={{ textAlign: "center" }}>
+                        <div style={{textAlign: "center"}}>
                             <Fragment>
                                 <Form.Check
                                     id={record.id_mapping}
@@ -269,7 +276,7 @@ class PriceList extends Component {
                     inputMode="numeric"
                     required
                     autoComplete="off"
-                    placeholder="Biaya" />
+                    placeholder="Biaya"/>
             </Form.Group>
 
         </Form>;
@@ -290,7 +297,7 @@ class PriceList extends Component {
                         <div className="row">
                             <div className="col-12">
                                 {/* card start */}
-                                <div className="card card-success shadow-lg" style={{ "minHeight": "800px" }}>
+                                <div className="card card-success shadow-lg" style={{"minHeight": "800px"}}>
                                     {/*  <div className="card-header card-header-content">
                                        
 
@@ -332,10 +339,10 @@ class PriceList extends Component {
             </div>
 
 
-
         )
     }
 }
+
 const mapStateToProps = (state) => ({
     data: state.pricelists.data || [],
     totalData: state.pricelists.totalData,

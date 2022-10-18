@@ -1,11 +1,11 @@
-import React, { Component, Fragment } from 'react'
-import { Figure, Form } from 'react-bootstrap';
-import { connect } from 'react-redux';
-import { fetchData, addForm, addData, clearError, confirmDel, closeForm, deleteData } from './bannerSlice'
+import React, {Component, Fragment} from 'react'
+import {Figure, Form} from 'react-bootstrap';
+import {connect} from 'react-redux';
+import {addData, addForm, clearError, closeForm, confirmDel, deleteData, fetchData} from './bannerSlice'
 import ReactDatatable from '@ashvin27/react-datatable';
 import AppModal from '../../components/modal/MyModal';
 import AppButton from '../../components/button/Button';
-import { AppSwalSuccess } from '../../components/modal/SwalSuccess';
+import {AppSwalSuccess} from '../../components/modal/SwalSuccess';
 
 class Cargo extends Component {
 
@@ -17,7 +17,7 @@ class Cargo extends Component {
             img: '',
             id_operator: '',
             imgUpload: '',
-            tipe:2
+            tipe: 2
         }
         this.state = {
             sort_order: "ASC",
@@ -28,7 +28,7 @@ class Cargo extends Component {
             selected: this.initSelected,
             errMsg: this.initSelected,
             loadingForm: false,
-            tipe:2
+            tipe: 2
         }
     }
 
@@ -69,29 +69,32 @@ class Cargo extends Component {
     handleChangeNumberOnly = evt => {
         const number = (evt.target.validity.valid) ? evt.target.value : this.state.selected.priority_number;
         if (evt.target.validity.valid) {
-            this.setState({ loadingForm: false, errMsg: { ...this.state.errMsg, priority_number: "" } });
+            this.setState({loadingForm: false, errMsg: {...this.state.errMsg, priority_number: ""}});
             this.props.resetError();
         }
-        this.setState({ selected: { ...this.state.selected, priority_number: number } });
+        this.setState({selected: {...this.state.selected, priority_number: number}});
     }
 
     handleChange(event) {
-        const { name, value } = event.target
+        const {name, value} = event.target
         var val = value;
-        this.setState({ errMsg: this.initSelected });
+        this.setState({errMsg: this.initSelected});
         this.props.resetError();
         if (event.target.name === "img") {
             val = event.target.files[0];
-            this.setState({ selected: { ...this.state.selected, imgUpload: "", img: "" } });
+            this.setState({selected: {...this.state.selected, imgUpload: "", img: ""}});
             if (!val) return;
             if (!val.name.match(/\.(jpg|jpeg|png)$/)) {
-                this.setState({ loadingForm: true, errMsg: { ...this.state.errMsg, img: "Please select valid image(.jpg .jpeg .png)" } });
+                this.setState({
+                    loadingForm: true,
+                    errMsg: {...this.state.errMsg, img: "Please select valid image(.jpg .jpeg .png)"}
+                });
 
                 //setLoading(true);
                 return;
             }
             if (val.size > 2099200) {
-                this.setState({ loadingForm: true, errMsg: { ...this.state.errMsg, img: "File size over 2MB" } });
+                this.setState({loadingForm: true, errMsg: {...this.state.errMsg, img: "File size over 2MB"}});
 
                 //setLoading(true);
                 return;
@@ -99,7 +102,10 @@ class Cargo extends Component {
             let reader = new FileReader();
             reader.readAsDataURL(val);
             reader.onloadend = () => {
-                this.setState({ loadingForm: false, selected: { ...this.state.selected, imgUpload: reader.result, img: val } });
+                this.setState({
+                    loadingForm: false,
+                    selected: {...this.state.selected, imgUpload: reader.result, img: val}
+                });
             };
         }
         this.setState({
@@ -108,12 +114,22 @@ class Cargo extends Component {
                 [name]: val
             }
         });
-        if (!this.state.selected.id_operator) this.setState({ selected: { ...this.state.selected, id_operator: this.props.user.id_operator } });
+        if (!this.state.selected.id_operator) this.setState({
+            selected: {
+                ...this.state.selected,
+                id_operator: this.props.user.id_operator
+            }
+        });
     }
 
     discardChanges = () => {
-        this.setState({ errMsg: {}, selected: this.initSelected, loadingForm: false });
-        if (!this.state.selected.id_operator) this.setState({ selected: { ...this.state.selected, id_operator: this.props.user.id_operator } });
+        this.setState({errMsg: {}, selected: this.initSelected, loadingForm: false});
+        if (!this.state.selected.id_operator) this.setState({
+            selected: {
+                ...this.state.selected,
+                id_operator: this.props.user.id_operator
+            }
+        });
         this.props.showForm();
     }
 
@@ -121,14 +137,14 @@ class Cargo extends Component {
         this.setState({
             loadingForm: false,
             errMsg: this.initSelected,
-            selected: { ...record, imgUpload: record.img }
+            selected: {...record, imgUpload: record.img}
         });
         this.props.showForm(true);
     }
 
     deleteRecord = (record) => {
         this.setState({
-            selected: { ...record, id_operator: this.props.user.id_operator }
+            selected: {...record, id_operator: this.props.user.id_operator}
         });
         this.props.showConfirmDel(true);
     }
@@ -146,9 +162,14 @@ class Cargo extends Component {
                 errors.img = "File size over 2MB";
             }
         }
-        if (!this.state.selected.id_operator) this.setState({ selected: { ...this.state.selected, id_operator: this.props.user.id_operator } });
+        if (!this.state.selected.id_operator) this.setState({
+            selected: {
+                ...this.state.selected,
+                id_operator: this.props.user.id_operator
+            }
+        });
 
-        this.setState({ errors });
+        this.setState({errors});
         if (this.validateForm(this.state.errMsg)) {
             this.props.onAdd(this.state.selected);
         } else {
@@ -173,8 +194,8 @@ class Cargo extends Component {
     }
 
     render() {
-        const { data } = this.props;
-        const { selected, errMsg } = this.state;
+        const {data} = this.props;
+        const {selected, errMsg} = this.state;
 
         const columns = [
             {
@@ -183,7 +204,8 @@ class Cargo extends Component {
                 width: 20,
                 align: "center",
                 sortable: false,
-                cell: (row, index) => <div style={{ textAlign: "center" }}>{((this.state.page_number - 1) * this.state.per_page) + index + 1 + '.'}</div>,
+                cell: (row, index) => <div
+                    style={{textAlign: "center"}}>{((this.state.page_number - 1) * this.state.per_page) + index + 1 + '.'}</div>,
                 row: 0
             },
             {
@@ -200,8 +222,8 @@ class Cargo extends Component {
                 sortable: false,
                 cell: record => {
                     return (
-                        <div style={{ textAlign: "center" }}>
-                            <Figure style={{ marginTop: ".3rem", marginBottom: 0 }}>
+                        <div style={{textAlign: "center"}}>
+                            <Figure style={{marginTop: ".3rem", marginBottom: 0}}>
                                 <Figure.Image
                                     thumbnail
                                     width={150}
@@ -221,12 +243,12 @@ class Cargo extends Component {
                 sortable: false,
                 cell: record => {
                     return (
-                        <div style={{ textAlign: "center" }}>
+                        <div style={{textAlign: "center"}}>
                             <Fragment>
                                 <button
                                     className="btn btn-xs btn-success"
                                     onClick={e => this.editRecord(record)}
-                                    style={{ marginRight: '5px' }}>
+                                    style={{marginRight: '5px'}}>
                                     <i className="fa fa-edit"></i> Edit
                                 </button>
                                 <button
@@ -258,7 +280,8 @@ class Cargo extends Component {
         const frmUser = <Form id="myForm">
             <Form.Group controlId="priority_number">
                 <Form.Label>Priority Number</Form.Label>
-                {this.props.errorPriority ? (<span className="float-right text-error badge badge-danger">{this.props.errorPriority}
+                {this.props.errorPriority ? (
+                    <span className="float-right text-error badge badge-danger">{this.props.errorPriority}
                 </span>) : ''}
                 {errMsg.priority_number ?
                     (<span className="float-right text-error badge badge-danger">{errMsg.priority_number}
@@ -271,14 +294,14 @@ class Cargo extends Component {
                     onInput={this.handleChangeNumberOnly.bind(this)}
                     value={selected.priority_number}
                     onChange={this.handleChangeNumberOnly.bind(this)}
-                    placeholder="Priority Number" />
+                    placeholder="Priority Number"/>
             </Form.Group>
             <Form.Group controlId="image">
                 <Form.Label>Image</Form.Label>{errMsg.img ?
-                    (<span className="float-right text-error badge badge-danger">{errMsg.img}</span>) : null}
-                <Form.File size="sm" name="img" setfieldvalue={selected.img} onChange={this.handleChange.bind(this)} />
+                (<span className="float-right text-error badge badge-danger">{errMsg.img}</span>) : null}
+                <Form.File size="sm" name="img" setfieldvalue={selected.img} onChange={this.handleChange.bind(this)}/>
             </Form.Group>
-            {selected.imgUpload ? (<Form.Group controlId="imagePreview" style={{ marginBottom: 0 }}>
+            {selected.imgUpload ? (<Form.Group controlId="imagePreview" style={{marginBottom: 0}}>
                 <Figure>
                     <Figure.Image
                         thumbnail
@@ -291,7 +314,8 @@ class Cargo extends Component {
             </Form.Group>) : ''}
         </Form>;
 
-        const contentDelete = <div dangerouslySetInnerHTML={{ __html: '<div id="caption" style="padding-bottom:20px;">Apakah anda yakin <br/>akan menghapus data ini ?</div>' }} />;
+        const contentDelete = <div
+            dangerouslySetInnerHTML={{__html: '<div id="caption" style="padding-bottom:20px;">Apakah anda yakin <br/>akan menghapus data ini ?</div>'}}/>;
         return (
 
             <div className="content-wrapper">
@@ -300,17 +324,20 @@ class Cargo extends Component {
                         <div className="row mb-2">
                             <div className="col-sm-6">
                                 <h1 className="m-0">Banner Kargo</h1>
-                            </div>{/* /.col */}
+                            </div>
+                            {/* /.col */}
 
-                        </div>{/* /.row */}
-                    </div>{/* /.container-fluid */}
+                        </div>
+                        {/* /.row */}
+                    </div>
+                    {/* /.container-fluid */}
                 </div>
                 <section className="content">
                     <div className="container-fluid">
                         <div className="row">
                             <div className="col-12">
                                 {/* card start */}
-                                <div className="card card-success shadow-lg" style={{ "minHeight": "800px" }}>
+                                <div className="card card-success shadow-lg" style={{"minHeight": "800px"}}>
                                     <div className="card-header card-header-content">
                                         <AppButton
                                             isLoading={this.props.isLoading}
@@ -371,7 +398,7 @@ class Cargo extends Component {
                 ></AppModal>
                 {this.props.showFormSuccess ? (<AppSwalSuccess
                     show={this.props.showFormSuccess}
-                    title={<div dangerouslySetInnerHTML={{ __html: this.props.contentMsg }} />}
+                    title={<div dangerouslySetInnerHTML={{__html: this.props.contentMsg}}/>}
                     type={this.props.tipeSWAL}
                     handleClose={this.props.isError ? this.props.closeSwalError : this.props.closeSwal}
                 >
@@ -379,13 +406,13 @@ class Cargo extends Component {
             </div>
 
 
-
         )
     }
 }
+
 const mapStateToProps = (state) => ({
     data: state.banners.data || [],
-    totalData:state.banners.totalData,
+    totalData: state.banners.totalData,
     isError: state.banners.isError,
     isLoading: state.banners.isLoading,
     isAddLoading: state.banners.isAddLoading,
@@ -426,7 +453,7 @@ const mapDispatchToPros = (dispatch) => {
                 sort_order: "ASC",
                 sort_column: "priority_number",
                 per_page: 10,
-                tipe:2
+                tipe: 2
             }
             dispatch(fetchData(queryString));
         },

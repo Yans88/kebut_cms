@@ -1,12 +1,12 @@
-import React, { Component, Fragment } from 'react'
-import { Col, Form } from 'react-bootstrap';
-import { connect } from 'react-redux';
-import { fetchData, addForm, addData, clearError, confirmDel, closeForm, deleteData } from './usersSlice'
-import { fetchData as fetchDataLevel } from '../Level/levelSlice'
+import React, {Component, Fragment} from 'react'
+import {Col, Form} from 'react-bootstrap';
+import {connect} from 'react-redux';
+import {addData, addForm, clearError, closeForm, confirmDel, deleteData, fetchData} from './usersSlice'
+import {fetchData as fetchDataLevel} from '../Level/levelSlice'
 import ReactDatatable from '@ashvin27/react-datatable';
 import AppModal from '../../components/modal/MyModal';
 import AppButton from '../../components/button/Button';
-import { AppSwalSuccess } from '../../components/modal/SwalSuccess';
+import {AppSwalSuccess} from '../../components/modal/SwalSuccess';
 
 class Users extends Component {
 
@@ -67,21 +67,31 @@ class Users extends Component {
     }
 
     handleChange(event) {
-        const { name, value } = event.target
+        const {name, value} = event.target
         this.setState({
             selected: {
                 ...this.state.selected,
                 [name]: value
             }
         });
-        this.setState({ errMsg: this.initSelected });
+        this.setState({errMsg: this.initSelected});
         this.props.resetError();
-        if (!this.state.selected.operator_by) this.setState({ selected: { ...this.state.selected, operator_by: this.props.user.id_operator } });
+        if (!this.state.selected.operator_by) this.setState({
+            selected: {
+                ...this.state.selected,
+                operator_by: this.props.user.id_operator
+            }
+        });
     }
 
     discardChanges = () => {
-        this.setState({ errMsg: {}, selected: this.initSelected, loadingForm: false });
-        if (!this.state.selected.operator_by) this.setState({ selected: { ...this.state.selected, operator_by: this.props.user.id_operator } });
+        this.setState({errMsg: {}, selected: this.initSelected, loadingForm: false});
+        if (!this.state.selected.operator_by) this.setState({
+            selected: {
+                ...this.state.selected,
+                operator_by: this.props.user.id_operator
+            }
+        });
         this.props.showForm();
     }
 
@@ -89,14 +99,14 @@ class Users extends Component {
         this.setState({
             loadingForm: false,
             errMsg: this.initSelected,
-            selected: { ...record, operator_by: this.props.user.id_operator }
+            selected: {...record, operator_by: this.props.user.id_operator}
         });
         this.props.showForm(true);
     }
 
     deleteRecord = (record) => {
         this.setState({
-            selected: { ...record, operator_by: this.props.user.id_operator }
+            selected: {...record, operator_by: this.props.user.id_operator}
         });
         this.props.showConfirmDel(true);
     }
@@ -111,9 +121,14 @@ class Users extends Component {
         errors.id_level = !this.state.selected.id_level ? "Level required" : '';
         errors.username = !this.state.selected.username ? "Username required" : '';
         errors.pass = !this.state.selected.pass ? "Password required" : '';
-        if (!this.state.selected.operator_by) this.setState({ selected: { ...this.state.selected, operator_by: this.props.user.id_operator } });
+        if (!this.state.selected.operator_by) this.setState({
+            selected: {
+                ...this.state.selected,
+                operator_by: this.props.user.id_operator
+            }
+        });
 
-        this.setState({ errors });
+        this.setState({errors});
         if (this.validateForm(this.state.errMsg)) {
             this.props.onAdd(this.state.selected);
         } else {
@@ -135,8 +150,8 @@ class Users extends Component {
     }
 
     render() {
-        const { data, dataLevel } = this.props;
-        const { selected, errMsg } = this.state;
+        const {data, dataLevel} = this.props;
+        const {selected, errMsg} = this.state;
 
         const columns = [
             {
@@ -145,7 +160,8 @@ class Users extends Component {
                 width: 20,
                 align: "center",
                 sortable: false,
-                cell: (row, index) => <div style={{ textAlign: "center" }}>{((this.state.page_number - 1) * this.state.per_page) + index + 1 + '.'}</div>,
+                cell: (row, index) => <div
+                    style={{textAlign: "center"}}>{((this.state.page_number - 1) * this.state.per_page) + index + 1 + '.'}</div>,
                 row: 0
             },
             {
@@ -174,12 +190,12 @@ class Users extends Component {
                 sortable: false,
                 cell: record => {
                     return (
-                        <div style={{ textAlign: "center" }}>
+                        <div style={{textAlign: "center"}}>
                             <Fragment>
                                 <button
                                     className="btn btn-xs btn-success"
                                     onClick={e => this.editRecord(record)}
-                                    style={{ marginRight: '5px' }}>
+                                    style={{marginRight: '5px'}}>
                                     <i className="fa fa-edit"></i> Edit
                                 </button>
                                 <button
@@ -211,7 +227,8 @@ class Users extends Component {
         const frmUser = <Form id="myForm">
             <Form.Group controlId="name">
                 <Form.Label>Name</Form.Label>
-                {this.props.errorPriority ? (<span className="float-right text-error badge badge-danger">{this.props.errorPriority}
+                {this.props.errorPriority ? (
+                    <span className="float-right text-error badge badge-danger">{this.props.errorPriority}
                 </span>) : ''}
                 {errMsg.name ?
                     (<span className="float-right text-error badge badge-danger">{errMsg.name}
@@ -223,7 +240,7 @@ class Users extends Component {
                     type="text"
                     value={selected.name}
                     onChange={this.handleChange.bind(this)}
-                    placeholder="Name" />
+                    placeholder="Name"/>
             </Form.Group>
 
             <Form.Group controlId="id_level">
@@ -265,7 +282,7 @@ class Users extends Component {
                         type="text"
                         value={selected.username}
                         onChange={this.handleChange.bind(this)}
-                        placeholder="Username" />
+                        placeholder="Username"/>
                 </Form.Group>
                 <Form.Group as={Col} controlId="pass">
                     <Form.Label>Password</Form.Label>
@@ -279,14 +296,15 @@ class Users extends Component {
                         type="text"
                         value={selected.pass}
                         onChange={this.handleChange.bind(this)}
-                        placeholder="Password" />
+                        placeholder="Password"/>
                 </Form.Group>
             </Form.Row>
 
 
         </Form>;
 
-        const contentDelete = <div dangerouslySetInnerHTML={{ __html: '<div id="caption" style="padding-bottom:20px;">Apakah anda yakin <br/>akan menghapus data ini ?</div>' }} />;
+        const contentDelete = <div
+            dangerouslySetInnerHTML={{__html: '<div id="caption" style="padding-bottom:20px;">Apakah anda yakin <br/>akan menghapus data ini ?</div>'}}/>;
         return (
 
             <div className="content-wrapper">
@@ -295,17 +313,20 @@ class Users extends Component {
                         <div className="row mb-2">
                             <div className="col-sm-6">
                                 <h1 className="m-0">Users</h1>
-                            </div>{/* /.col */}
+                            </div>
+                            {/* /.col */}
 
-                        </div>{/* /.row */}
-                    </div>{/* /.container-fluid */}
+                        </div>
+                        {/* /.row */}
+                    </div>
+                    {/* /.container-fluid */}
                 </div>
                 <section className="content">
                     <div className="container-fluid">
                         <div className="row">
                             <div className="col-12">
                                 {/* card start */}
-                                <div className="card card-success shadow-lg" style={{ "minHeight": "800px" }}>
+                                <div className="card card-success shadow-lg" style={{"minHeight": "800px"}}>
                                     <div className="card-header card-header-content">
                                         <AppButton
                                             isLoading={this.props.isLoading}
@@ -366,7 +387,7 @@ class Users extends Component {
                 ></AppModal>
                 {this.props.showFormSuccess ? (<AppSwalSuccess
                     show={this.props.showFormSuccess}
-                    title={<div dangerouslySetInnerHTML={{ __html: this.props.contentMsg }} />}
+                    title={<div dangerouslySetInnerHTML={{__html: this.props.contentMsg}}/>}
                     type={this.props.tipeSWAL}
                     handleClose={this.props.isError ? this.props.closeSwalError : this.props.closeSwal}
                 >
@@ -374,13 +395,13 @@ class Users extends Component {
             </div>
 
 
-
         )
     }
 }
+
 const mapStateToProps = (state) => ({
     data: state.usersAdm.data || [],
-    totalData:state.usersAdm.totalData,
+    totalData: state.usersAdm.totalData,
     dataLevel: state.level.data || [],
     isError: state.usersAdm.isError,
     isLoading: state.usersAdm.isLoading,

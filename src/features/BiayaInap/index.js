@@ -1,11 +1,11 @@
-import React, { Component, Fragment } from 'react'
-import { Form } from 'react-bootstrap';
-import { connect } from 'react-redux';
-import { fetchData, addForm, addData, clearError, confirmDel, closeForm, deleteData } from './biSlice'
+import React, {Component, Fragment} from 'react'
+import {Form} from 'react-bootstrap';
+import {connect} from 'react-redux';
+import {addData, addForm, clearError, closeForm, confirmDel, deleteData, fetchData} from './biSlice'
 import ReactDatatable from '@ashvin27/react-datatable';
 import AppModal from '../../components/modal/MyModal';
 import AppButton from '../../components/button/Button';
-import { AppSwalSuccess } from '../../components/modal/SwalSuccess';
+import {AppSwalSuccess} from '../../components/modal/SwalSuccess';
 import NumberFormat from 'react-number-format';
 
 class BiayaInap extends Component {
@@ -45,7 +45,7 @@ class BiayaInap extends Component {
                 id_ac: selectedId
             }
         });
-        const queryString = { ...this.state, id_ac: selectedId }
+        const queryString = {...this.state, id_ac: selectedId}
         this.props.onLoad(queryString);
     };
 
@@ -80,21 +80,31 @@ class BiayaInap extends Component {
     }
 
     handleChange(event) {
-        const { name, value } = event.target
+        const {name, value} = event.target
         this.setState({
             selected: {
                 ...this.state.selected,
                 [name]: value
             }
         });
-        this.setState({ errMsg: this.initSelected });
+        this.setState({errMsg: this.initSelected});
         this.props.resetError();
-        if (!this.state.selected.id_operator) this.setState({ selected: { ...this.state.selected, id_operator: this.props.user.id_operator } });
+        if (!this.state.selected.id_operator) this.setState({
+            selected: {
+                ...this.state.selected,
+                id_operator: this.props.user.id_operator
+            }
+        });
     }
 
     discardChanges = () => {
-        this.setState({ errMsg: {}, selected: this.initSelected, loadingForm: false });
-        if (!this.state.selected.id_operator) this.setState({ selected: { ...this.state.selected, id_operator: this.props.user.id_operator } });
+        this.setState({errMsg: {}, selected: this.initSelected, loadingForm: false});
+        if (!this.state.selected.id_operator) this.setState({
+            selected: {
+                ...this.state.selected,
+                id_operator: this.props.user.id_operator
+            }
+        });
         this.props.showForm();
     }
 
@@ -102,14 +112,14 @@ class BiayaInap extends Component {
         this.setState({
             loadingForm: false,
             errMsg: this.initSelected,
-            selected: { ...record, id_operator: this.props.user.id_operator }
+            selected: {...record, id_operator: this.props.user.id_operator}
         });
         this.props.showForm(true);
     }
 
     deleteRecord = (record) => {
         this.setState({
-            selected: { ...record, id_operator: this.props.user.id_operator }
+            selected: {...record, id_operator: this.props.user.id_operator}
         });
         this.props.showConfirmDel(true);
     }
@@ -122,9 +132,14 @@ class BiayaInap extends Component {
         });
         errors.biaya = !this.state.selected.biaya ? "Biaya required" : '';
         errors.jml = !this.state.selected.jml ? "Jumlah required" : '';
-        if (!this.state.selected.id_operator) this.setState({ selected: { ...this.state.selected, id_operator: this.props.user.id_operator } });
+        if (!this.state.selected.id_operator) this.setState({
+            selected: {
+                ...this.state.selected,
+                id_operator: this.props.user.id_operator
+            }
+        });
 
-        this.setState({ errors });
+        this.setState({errors});
         if (this.validateForm(this.state.errMsg)) {
             this.props.onAdd(this.state.selected);
         } else {
@@ -149,8 +164,8 @@ class BiayaInap extends Component {
     }
 
     render() {
-        const { data } = this.props;
-        const { selected, errMsg } = this.state;
+        const {data} = this.props;
+        const {selected, errMsg} = this.state;
         const columns = [
             {
                 key: "no",
@@ -158,7 +173,8 @@ class BiayaInap extends Component {
                 width: 20,
                 align: "center",
                 sortable: false,
-                cell: (row, index) => <div style={{ textAlign: "center" }}>{((this.state.page_number - 1) * this.state.per_page) + index + 1 + '.'}</div>,
+                cell: (row, index) => <div
+                    style={{textAlign: "center"}}>{((this.state.page_number - 1) * this.state.per_page) + index + 1 + '.'}</div>,
                 row: 0
             },
             {
@@ -167,7 +183,7 @@ class BiayaInap extends Component {
                 align: "center",
                 sortable: true,
                 cell: record => {
-                    return (<div style={{ textAlign: "right" }}><Fragment>
+                    return (<div style={{textAlign: "right"}}><Fragment>
                         <NumberFormat
                             value={record.biaya}
                             thousandSeparator={true}
@@ -183,7 +199,7 @@ class BiayaInap extends Component {
                 align: "center",
                 sortable: true,
                 cell: record => {
-                    return (<div style={{ textAlign: "right" }}><Fragment>
+                    return (<div style={{textAlign: "right"}}><Fragment>
                         <NumberFormat
                             value={record.jml}
                             thousandSeparator={true}
@@ -202,12 +218,12 @@ class BiayaInap extends Component {
                 sortable: false,
                 cell: record => {
                     return (
-                        <div style={{ textAlign: "center" }}>
+                        <div style={{textAlign: "center"}}>
                             <Fragment>
                                 <button
                                     className="btn btn-xs btn-success"
                                     onClick={e => this.editRecord(record)}
-                                    style={{ marginRight: '5px' }}>
+                                    style={{marginRight: '5px'}}>
                                     <i className="fa fa-edit"></i> Edit
                                 </button>
                                 <button
@@ -253,7 +269,7 @@ class BiayaInap extends Component {
                     inputMode="numeric"
                     required
                     autoComplete="off"
-                    placeholder="Biaya" />
+                    placeholder="Biaya"/>
             </Form.Group>
             <Form.Group controlId="jml">
                 <Form.Label>Jumlah</Form.Label>
@@ -270,11 +286,12 @@ class BiayaInap extends Component {
                     inputMode="numeric"
                     required
                     autoComplete="off"
-                    placeholder="Jumlah" />
+                    placeholder="Jumlah"/>
             </Form.Group>
         </Form>;
 
-        const contentDelete = <div dangerouslySetInnerHTML={{ __html: '<div id="caption" style="padding-bottom:20px;">Apakah anda yakin <br/>akan menghapus data ini ?</div>' }} />;
+        const contentDelete = <div
+            dangerouslySetInnerHTML={{__html: '<div id="caption" style="padding-bottom:20px;">Apakah anda yakin <br/>akan menghapus data ini ?</div>'}}/>;
         return (
 
             <div className="content-wrapper">
@@ -283,17 +300,20 @@ class BiayaInap extends Component {
                         <div className="row mb-2">
                             <div className="col-sm-6">
                                 <h1 className="m-0">Biaya Inap</h1>
-                            </div>{/* /.col */}
+                            </div>
+                            {/* /.col */}
 
-                        </div>{/* /.row */}
-                    </div>{/* /.container-fluid */}
+                        </div>
+                        {/* /.row */}
+                    </div>
+                    {/* /.container-fluid */}
                 </div>
                 <section className="content">
                     <div className="container-fluid">
                         <div className="row">
                             <div className="col-12">
                                 {/* card start */}
-                                <div className="card card-success shadow-lg" style={{ "minHeight": "800px" }}>
+                                <div className="card card-success shadow-lg" style={{"minHeight": "800px"}}>
                                     <div className="card-header card-header-content">
                                         <AppButton
                                             isLoading={this.props.isLoading}
@@ -354,7 +374,7 @@ class BiayaInap extends Component {
                 ></AppModal>
                 {this.props.showFormSuccess ? (<AppSwalSuccess
                     show={this.props.showFormSuccess}
-                    title={<div dangerouslySetInnerHTML={{ __html: this.props.contentMsg }} />}
+                    title={<div dangerouslySetInnerHTML={{__html: this.props.contentMsg}}/>}
                     type={this.props.tipeSWAL}
                     handleClose={this.props.isError ? this.props.closeSwalError : this.handleCloseSwal.bind(this)}
                 >
@@ -362,10 +382,10 @@ class BiayaInap extends Component {
             </div>
 
 
-
         )
     }
 }
+
 const mapStateToProps = (state) => ({
     data: state.biayaInap.data || [],
     totalData: state.biayaInap.totalData,

@@ -1,11 +1,11 @@
-import React, { Component, Fragment } from 'react'
-import { connect } from 'react-redux';
-import { fetchData, setStatus, clearError, showConfirm, closeForm } from './membersSlice'
+import React, {Component, Fragment} from 'react'
+import {connect} from 'react-redux';
+import {clearError, closeForm, fetchData, setStatus, showConfirm} from './membersSlice'
 import ReactDatatable from '@ashvin27/react-datatable';
-import { Dropdown, Badge } from 'react-bootstrap';
-import { Icon } from 'rsuite';
+import {Badge, Dropdown} from 'react-bootstrap';
+import {Icon} from 'rsuite';
 import AppModal from '../../components/modal/MyModal';
-import { AppSwalSuccess } from '../../components/modal/SwalSuccess';
+import {AppSwalSuccess} from '../../components/modal/SwalSuccess';
 
 class Members extends Component {
 
@@ -24,7 +24,7 @@ class Members extends Component {
     }
 
     componentDidMount() {
-        if (!this.state.id_operator) this.setState({ id_operator: this.props.user.id_operator });
+        if (!this.state.id_operator) this.setState({id_operator: this.props.user.id_operator});
         this.props.onLoad(this.state);
     }
 
@@ -50,7 +50,7 @@ class Members extends Component {
     }
 
     showConfirm = async (record) => {
-        if (!this.state.id_operator) this.setState({ id_operator: this.props.user.id_operator });
+        if (!this.state.id_operator) this.setState({id_operator: this.props.user.id_operator});
         var dt = {
             id_operator: this.state.id_operator ? this.state.id_operator : this.props.user.id_operator,
             status: record.status === 1 ? 2 : 1,
@@ -77,7 +77,7 @@ class Members extends Component {
     };
 
     render() {
-        const { data } = this.props;
+        const {data} = this.props;
 
         const columns = [
             {
@@ -86,7 +86,8 @@ class Members extends Component {
                 width: 20,
                 align: "center",
                 sortable: false,
-                cell: (row, index) => <div style={{ textAlign: "center" }}>{((this.state.page_number - 1) * this.state.per_page) + index + 1 + '.'}</div>,
+                cell: (row, index) => <div
+                    style={{textAlign: "center"}}>{((this.state.page_number - 1) * this.state.per_page) + index + 1 + '.'}</div>,
                 row: 0
             },
             {
@@ -110,7 +111,9 @@ class Members extends Component {
                 cell: record => {
                     return (
                         <Fragment>
-                            {record.phone} {record.verify_phone === 1 && <Badge style={{ fontWeight: 500, fontSize: "65%" }} variant="success" className="float-right"><Icon style={{ color: '#ffffff' }} icon="check-square-o" size="lg" /> Verified</Badge>}
+                            {record.phone} {record.verify_phone === 1 &&
+                            <Badge style={{fontWeight: 500, fontSize: "65%"}} variant="success" className="float-right"><Icon
+                                style={{color: '#ffffff'}} icon="check-square-o" size="lg"/> Verified</Badge>}
                         </Fragment>)
                 }
             },
@@ -130,7 +133,7 @@ class Members extends Component {
                 cell: record => {
                     var status = record.status === 1 ? "Active" : "Inactive"
                     return (
-                        <div style={{ textAlign: "center" }}>
+                        <div style={{textAlign: "center"}}>
                             <Fragment>
                                 <Dropdown>
                                     <Dropdown.Toggle
@@ -144,9 +147,11 @@ class Members extends Component {
                                     </Dropdown.Toggle>
                                     <Dropdown.Menu size="sm" className="my-dropdown-menu">
                                         {record.status === 1 ? (
-                                            <Dropdown.Item as="button" onClick={() => this.showConfirm(record)}>Set Inactive</Dropdown.Item>
+                                            <Dropdown.Item as="button" onClick={() => this.showConfirm(record)}>Set
+                                                Inactive</Dropdown.Item>
                                         ) : (
-                                            <Dropdown.Item as="button" onClick={() => this.showConfirm(record)}>Set Active</Dropdown.Item>
+                                            <Dropdown.Item as="button" onClick={() => this.showConfirm(record)}>Set
+                                                Active</Dropdown.Item>
                                         )}
 
                                     </Dropdown.Menu>
@@ -180,17 +185,20 @@ class Members extends Component {
                         <div className="row mb-2">
                             <div className="col-sm-6">
                                 <h1 className="m-0">Members</h1>
-                            </div>{/* /.col */}
+                            </div>
+                            {/* /.col */}
 
-                        </div>{/* /.row */}
-                    </div>{/* /.container-fluid */}
+                        </div>
+                        {/* /.row */}
+                    </div>
+                    {/* /.container-fluid */}
                 </div>
                 <section className="content">
                     <div className="container-fluid">
                         <div className="row">
                             <div className="col-12">
                                 {/* card start */}
-                                <div className="card card-success shadow-lg" style={{ "minHeight": "800px" }}>
+                                <div className="card card-success shadow-lg" style={{"minHeight": "800px"}}>
 
                                     <div className="card-body">
                                         {data ? (
@@ -215,7 +223,7 @@ class Members extends Component {
                 <AppModal
                     show={this.props.dt.showFormConfirm}
                     size="xs"
-                    form={<div dangerouslySetInnerHTML={{ __html: this.props.dt.contentConfirm }} />}
+                    form={<div dangerouslySetInnerHTML={{__html: this.props.dt.contentConfirm}}/>}
                     handleClose={this.handleClose}
                     backdrop="static"
                     keyboard={false}
@@ -227,7 +235,7 @@ class Members extends Component {
                 ></AppModal>
                 {this.props.showFormSuccess ? (<AppSwalSuccess
                     show={this.props.showFormSuccess}
-                    title={<div dangerouslySetInnerHTML={{ __html: this.props.contentMsg }} />}
+                    title={<div dangerouslySetInnerHTML={{__html: this.props.contentMsg}}/>}
                     type={this.props.tipeSWAL}
                     handleClose={this.props.isError ? this.props.closeSwalError : this.props.closeSwal}
                 >
@@ -235,13 +243,13 @@ class Members extends Component {
             </div>
 
 
-
         )
     }
 }
+
 const mapStateToProps = (state) => ({
     dt: state.members.dt || {},
-    totalData:state.members.totalData,
+    totalData: state.members.totalData,
     data: state.members.data || [],
     isError: state.members.isError,
     isLoading: state.members.isLoading,

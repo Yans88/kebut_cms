@@ -1,11 +1,11 @@
-import React, { Component } from 'react'
-import { Col, Figure, Form } from 'react-bootstrap'
-import { Placeholder } from 'rsuite';
+import React, {Component} from 'react'
+import {Col, Figure, Form} from 'react-bootstrap'
+import {Placeholder} from 'rsuite';
 import noImg from '../../assets/noPhoto.jpg'
-import { connect } from 'react-redux';
+import {connect} from 'react-redux';
 import "react-datetime/css/react-datetime.css";
-import { addData, fetchDataDetail, chgProps, closeForm, clearError } from './outletsSlice'
-import { AppSwalSuccess } from '../../components/modal/SwalSuccess';
+import {addData, chgProps, clearError, closeForm, fetchDataDetail} from './outletsSlice'
+import {AppSwalSuccess} from '../../components/modal/SwalSuccess';
 import AppButton from '../../components/button/Button';
 
 
@@ -15,7 +15,7 @@ class FormOutlet extends Component {
         this.initSelected = {
             nama_outlet: '',
             img: '',
-            alamat:''
+            alamat: ''
         }
         this.state = {
             addLoading: false,
@@ -32,13 +32,13 @@ class FormOutlet extends Component {
         if (selectedId > 0) {
             this.getData();
         }
-        this.setState({ id_operator: this.props.user.id_operator });
+        this.setState({id_operator: this.props.user.id_operator});
     }
 
     getData = () => {
-        if (!this.state.id_operator) this.setState({ ...this.state, id_operator: this.props.user.id_operator });
+        if (!this.state.id_operator) this.setState({...this.state, id_operator: this.props.user.id_operator});
         const selectedId = sessionStorage.getItem('idOutletKebut');
-        const queryString = { id_outlet: selectedId }
+        const queryString = {id_outlet: selectedId}
         this.props.onLoad(queryString);
     };
 
@@ -56,8 +56,8 @@ class FormOutlet extends Component {
         errors.img = !this.state.img && !this.props.dtRes.img ? "Image required" : '';
         errors.img = !this.state.img && this.state.img.size > 2099200 ? "File size over 2MB" : errors.img;
         errors.alamat = !this.props.dtRes.alamat ? "Alamat Required" : '';
-        this.setState({ ...this.state, addLoading: true });
-        this.setState({ errors });
+        this.setState({...this.state, addLoading: true});
+        this.setState({errors});
         if (this.validateForm(this.state.errMsg)) {
             const param = {
                 ...this.props.dtRes,
@@ -82,15 +82,15 @@ class FormOutlet extends Component {
     handleChange(evt) {
         const name = evt.target.name;
         var value = evt.target.value;
-        const dt = { key: "id_operator", value: this.props.user.id_operator };
+        const dt = {key: "id_operator", value: this.props.user.id_operator};
 
         if (evt.target.name === "img") {
             value = evt.target.files[0];
-            this.setState({ img: '' })
+            this.setState({img: ''})
             if (!value) return;
             if (!value.name.match(/\.(jpg|jpeg|png)$/)) {
-                this.setState({ errMsg: { img: "Extension Invalid" } })
-                this.setState({ addLoading: true })
+                this.setState({errMsg: {img: "Extension Invalid"}})
+                this.setState({addLoading: true})
                 dt['key'] = "imgUpload";
                 dt['value'] = '';
                 dt['key'] = "img";
@@ -99,8 +99,8 @@ class FormOutlet extends Component {
                 return;
             }
             if (value.size > 2099200) {
-                this.setState({ errMsg: { img: "File size over 2MB" } })
-                this.setState({ addLoading: true })
+                this.setState({errMsg: {img: "File size over 2MB"}})
+                this.setState({addLoading: true})
                 dt['key'] = "imgUpload";
                 dt['value'] = '';
                 dt['key'] = "img";
@@ -114,7 +114,7 @@ class FormOutlet extends Component {
                 dt['key'] = "imgUpload";
                 dt['value'] = reader.result;
                 this.props.changeProps(dt);
-                this.setState({ ...this.state, img: value })
+                this.setState({...this.state, img: value})
             };
         }
 
@@ -139,12 +139,11 @@ class FormOutlet extends Component {
 
     }
 
-    
 
     render() {
-        const { dtRes } = this.props;
-        const { Paragraph } = Placeholder;
-        const { errMsg } = this.state;
+        const {dtRes} = this.props;
+        const {Paragraph} = Placeholder;
+        const {errMsg} = this.state;
         return (
             <div className="content-wrapper">
                 <div className="content-header">
@@ -152,22 +151,27 @@ class FormOutlet extends Component {
                         <div className="row mb-2">
                             <div className="col-sm-6">
                                 <h1 className="m-0">Add/Edit Outlet</h1>
-                            </div>{/* /.col */}
+                            </div>
+                            {/* /.col */}
 
-                        </div>{/* /.row */}
-                    </div>{/* /.container-fluid */}
+                        </div>
+                        {/* /.row */}
+                    </div>
+                    {/* /.container-fluid */}
                 </div>
                 <section className="content">
                     <div className="container-fluid">
                         <div className="row">
                             <div className="col-12">
                                 {/* card start */}
-                                <div className="card card-success shadow-lg" >
+                                <div className="card card-success shadow-lg">
 
                                     <div className="card-body">
-                                        {this.props.isLoading ? (<Paragraph rowHeight={25} rowMargin={30} rows={8} active style={{ marginTop: 30 }} />) : (
+                                        {this.props.isLoading ? (
+                                            <Paragraph rowHeight={25} rowMargin={30} rows={8} active
+                                                       style={{marginTop: 30}}/>) : (
                                             <Form id="myForm">
-                                                <br />
+                                                <br/>
                                                 <Form.Row>
                                                     <Form.Group as={Col} xs={4} controlId="nama_outlet">
                                                         <Form.Label>Nama Outlet</Form.Label>
@@ -179,8 +183,9 @@ class FormOutlet extends Component {
                                                             name="nama_outlet"
                                                             type="text"
                                                             autoComplete="off"
-                                                            placeholder="Nama Outlet" />
-                                                        {errMsg.nama_outlet && (<span className="text-error badge badge-danger">{errMsg.nama_outlet}</span>)}
+                                                            placeholder="Nama Outlet"/>
+                                                        {errMsg.nama_outlet && (<span
+                                                            className="text-error badge badge-danger">{errMsg.nama_outlet}</span>)}
 
                                                     </Form.Group>
                                                     <Form.Group as={Col} xs={2} controlId="telp">
@@ -193,7 +198,7 @@ class FormOutlet extends Component {
                                                             name="telp"
                                                             type="text"
                                                             autoComplete="off"
-                                                            placeholder="Telp." />
+                                                            placeholder="Telp."/>
 
                                                     </Form.Group>
                                                     <Form.Group as={Col} xs={2} controlId="phone">
@@ -205,7 +210,7 @@ class FormOutlet extends Component {
                                                             name="phone"
                                                             type="text"
                                                             autoComplete="off"
-                                                            placeholder="Phone" />
+                                                            placeholder="Phone"/>
 
                                                     </Form.Group>
                                                     <Form.Group as={Col} controlId="latitude">
@@ -217,7 +222,7 @@ class FormOutlet extends Component {
                                                             name="latitude"
                                                             type="text"
                                                             autoComplete="off"
-                                                            placeholder="Latitude" />
+                                                            placeholder="Latitude"/>
                                                     </Form.Group>
                                                     <Form.Group as={Col} controlId="longitude">
                                                         <Form.Label>Longitude</Form.Label>
@@ -228,11 +233,11 @@ class FormOutlet extends Component {
                                                             name="longitude"
                                                             type="text"
                                                             autoComplete="off"
-                                                            placeholder="Longitude" />
+                                                            placeholder="Longitude"/>
                                                     </Form.Group>
                                                 </Form.Row>
 
-                                                <br />
+                                                <br/>
 
                                                 <Form.Row>
                                                     <Form.Group as={Col} xs={8} controlId="alamat">
@@ -243,29 +248,32 @@ class FormOutlet extends Component {
                                                             name="alamat"
                                                             value={dtRes.alamat ? dtRes.alamat : ''}
                                                             onChange={this.handleChange}
-                                                            style={{ height: '200px' }}
+                                                            style={{height: '200px'}}
                                                         />
-                                                        {errMsg.alamat && (<span className="float-right text-error badge badge-danger">{errMsg.alamat}</span>)}
+                                                        {errMsg.alamat && (<span
+                                                            className="float-right text-error badge badge-danger">{errMsg.alamat}</span>)}
 
                                                     </Form.Group>
                                                     <Form.Group as={Col} xs={2} controlId="img">
                                                         <Form.Label>Image</Form.Label>
-                                                        {errMsg.img ? (<span className="float-right text-error badge badge-danger">{errMsg.img}</span>) : ''}
+                                                        {errMsg.img ? (<span
+                                                            className="float-right text-error badge badge-danger">{errMsg.img}</span>) : ''}
                                                         <Form.File
                                                             setfieldvalue={this.state.img}
                                                             onChange={this.handleChange}
                                                             size="sm"
                                                             name="img"
-                                                            style={{ "color": "rgba(0, 0, 0, 0)" }} />
+                                                            style={{"color": "rgba(0, 0, 0, 0)"}}/>
                                                         <Form.Text className="text-muted">
-                                                            <em>- Images *.jpg, *.jpeg, *.png <br />- Maks. Size 2MB</em>
+                                                            <em>- Images *.jpg, *.jpeg, *.png <br/>- Maks. Size 2MB</em>
                                                         </Form.Text>
 
                                                     </Form.Group>
 
                                                     {dtRes.img || dtRes.imgUpload ? (
                                                         <Form.Group as={Col} xs={2} controlId="imagePreview">
-                                                            <Form.Label style={{ "color": "rgba(0, 0, 0, 0)" }}>-----</Form.Label>
+                                                            <Form.Label
+                                                                style={{"color": "rgba(0, 0, 0, 0)"}}>-----</Form.Label>
                                                             <Figure>
                                                                 <Figure.Image
                                                                     thumbnail
@@ -280,9 +288,12 @@ class FormOutlet extends Component {
 
 
                                                 </Form.Row>
-                                                <br />
-                                                <br />
-                                                <button style={{ marginRight: 5 }} type="button" onClick={() => this.props.history.goBack()} className="btn btn-danger">Back</button>
+                                                <br/>
+                                                <br/>
+                                                <button style={{marginRight: 5}} type="button"
+                                                        onClick={() => this.props.history.goBack()}
+                                                        className="btn btn-danger">Back
+                                                </button>
                                                 <AppButton
                                                     onClick={this.handleSubmit.bind(this)}
                                                     isLoading={this.props.isAddLoading || this.state.addLoading}
@@ -303,7 +314,7 @@ class FormOutlet extends Component {
                 </section>
                 {this.props.showFormSuccess ? (<AppSwalSuccess
                     show={this.props.showFormSuccess}
-                    title={<div dangerouslySetInnerHTML={{ __html: this.props.contentMsg }} />}
+                    title={<div dangerouslySetInnerHTML={{__html: this.props.contentMsg}}/>}
                     type={this.props.tipeSWAL}
                     handleClose={this.handleClose.bind(this)}
                 >
@@ -312,6 +323,7 @@ class FormOutlet extends Component {
         )
     }
 }
+
 const mapStateToProps = (state) => {
     return {
         dtRes: state.outlets.dtRes || [],

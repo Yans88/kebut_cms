@@ -1,4 +1,4 @@
-import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
+import {createAsyncThunk, createSlice} from '@reduxjs/toolkit';
 import axios from 'axios';
 
 const API_URL = process.env.REACT_APP_URL_API;
@@ -86,7 +86,6 @@ export const addData = createAsyncThunk(
 );
 
 
-
 const initialState = {
     data: {},
     error: null,
@@ -110,19 +109,19 @@ export const settingSlice = createSlice({
         closeForm: (state) => {
             state.showFormSuccess = false;
         },
-        chgProps: (state, { payload }) => {
+        chgProps: (state, {payload}) => {
             state.data[payload.key] = payload.value;
         }
     },
     extraReducers: {
-        [fetchData.fulfilled]: (state, { payload }) => {
+        [fetchData.fulfilled]: (state, {payload}) => {
 
             state.data = payload.data;
             state.isLoading = false;
             state.isError = false;
             //return state;
         },
-        [fetchData.rejected]: (state, { payload }) => {
+        [fetchData.rejected]: (state, {payload}) => {
             //console.log('payload', payload);
             state.isLoading = false;
             state.isError = true;
@@ -139,7 +138,7 @@ export const settingSlice = createSlice({
             state.isAddLoading = false;
             state.contentMsg = "<div style='font-size:20px; text-align:center;'><strong>Success</strong>, Data berhasil disimpan</div>";
         },
-        [addData.rejected]: (state, { payload }) => {
+        [addData.rejected]: (state, {payload}) => {
             console.log(payload);
             state.isAddLoading = payload !== undefined ? payload.isAddLoading : false;
             state.showFormSuccess = payload !== undefined ? payload.showFormSuccess : true;
@@ -156,6 +155,6 @@ export const settingSlice = createSlice({
     }
 })
 
-export const { clearError, closeForm, chgProps } = settingSlice.actions;
+export const {clearError, closeForm, chgProps} = settingSlice.actions;
 export const userSelector = (state) => state.settings;
 //export default mainSlice.reducer;

@@ -1,10 +1,10 @@
-import React, { useState, useEffect } from 'react';
+import React, {useEffect, useState} from 'react';
 import PropTypes from 'prop-types';
 
 import './Toast.css';
 
 const Toast = props => {
-    const { toastList, position, autoDelete, dismissTime } = props;
+    const {toastList, position, autoDelete, dismissTime} = props;
     const [list, setList] = useState(toastList);
 
     useEffect(() => {
@@ -42,13 +42,13 @@ const Toast = props => {
                         <div
                             key={i}
                             className={`notification toast ${position}`}
-                            style={{ backgroundColor: toast.backgroundColor }}
+                            style={{backgroundColor: toast.backgroundColor}}
                         >
                             <button onClick={() => deleteToast(toast.id)}>
                                 X
                             </button>
                             <div className="notification-image">
-                                <img src={toast.icon} alt="" />
+                                <img src={toast.icon} alt=""/>
                             </div>
                             <div>
                                 <p className="notification-title">{toast.title}</p>

@@ -1,11 +1,11 @@
-import React, { Component, Fragment } from 'react'
-import { Figure } from 'react-bootstrap';
-import { connect } from 'react-redux';
-import { fetchData, clearError, confirmDel, closeForm, deleteData } from './outletsSlice'
+import React, {Component, Fragment} from 'react'
+import {Figure} from 'react-bootstrap';
+import {connect} from 'react-redux';
+import {clearError, closeForm, confirmDel, deleteData, fetchData} from './outletsSlice'
 import ReactDatatable from '@ashvin27/react-datatable';
 import AppModal from '../../components/modal/MyModal';
 import AppButton from '../../components/button/Button';
-import { AppSwalSuccess } from '../../components/modal/SwalSuccess';
+import {AppSwalSuccess} from '../../components/modal/SwalSuccess';
 
 class Outlets extends Component {
     constructor(props) {
@@ -69,7 +69,7 @@ class Outlets extends Component {
 
     deleteRecord = (record) => {
         this.setState({
-            selected: { ...record, id_operator: this.props.user.id_operator }
+            selected: {...record, id_operator: this.props.user.id_operator}
         });
         this.props.showConfirmDel(true);
     }
@@ -79,7 +79,7 @@ class Outlets extends Component {
     }
 
     render() {
-        const { data } = this.props;
+        const {data} = this.props;
 
         const columns = [
             {
@@ -88,7 +88,8 @@ class Outlets extends Component {
                 width: 20,
                 align: "center",
                 sortable: false,
-                cell: (row, index) => <div style={{ textAlign: "center" }}>{((this.state.page_number - 1) * this.state.per_page) + index + 1 + '.'}</div>,
+                cell: (row, index) => <div
+                    style={{textAlign: "center"}}>{((this.state.page_number - 1) * this.state.per_page) + index + 1 + '.'}</div>,
                 row: 0
             },
             {
@@ -105,8 +106,9 @@ class Outlets extends Component {
                 sortable: false,
                 cell: record => {
                     return (<Fragment>
-                        {record.alamat}<br />
-                        Koordinat : {record.latitude ? record.latitude : '-'},{record.longitude ? record.longitude : '-'}
+                        {record.alamat}<br/>
+                        Koordinat
+                        : {record.latitude ? record.latitude : '-'},{record.longitude ? record.longitude : '-'}
                     </Fragment>)
                 }
             },
@@ -118,7 +120,7 @@ class Outlets extends Component {
                 sortable: false,
                 cell: record => {
                     return (<Fragment>
-                        Phone : {record.phone ? record.phone : '-'}<br />
+                        Phone : {record.phone ? record.phone : '-'}<br/>
                         Telp. : {record.telp ? record.telp : '-'}
                     </Fragment>)
                 }
@@ -131,7 +133,7 @@ class Outlets extends Component {
                 sortable: false,
                 cell: record => {
                     return (
-                        <div style={{ textAlign: "center" }}>
+                        <div style={{textAlign: "center"}}>
                             <Figure>
                                 <Figure.Image
                                     thumbnail
@@ -153,18 +155,18 @@ class Outlets extends Component {
                 sortable: false,
                 cell: record => {
                     return (
-                        <div style={{ textAlign: "center" }}>
+                        <div style={{textAlign: "center"}}>
                             <Fragment>
                                 <button
                                     className="btn btn-xs btn-success"
                                     onClick={e => this.discardChanges(record)}
-                                    style={{ marginBottom: '3px', width: 80 }}>
+                                    style={{marginBottom: '3px', width: 80}}>
                                     <i className="fa fa-edit"></i> Edit
                                 </button>
                                 <button
                                     className="btn btn-danger btn-xs"
                                     onClick={() => this.deleteRecord(record)}
-                                    style={{ width: 80 }}>
+                                    style={{width: 80}}>
                                     <i className="fa fa-trash"></i> Delete
                                 </button>
                             </Fragment>
@@ -191,7 +193,8 @@ class Outlets extends Component {
         }
 
 
-        const contentDelete = <div dangerouslySetInnerHTML={{ __html: '<div id="caption" style="padding-bottom:20px;">Apakah anda yakin <br/>akan menghapus data ini ?</div>' }} />;
+        const contentDelete = <div
+            dangerouslySetInnerHTML={{__html: '<div id="caption" style="padding-bottom:20px;">Apakah anda yakin <br/>akan menghapus data ini ?</div>'}}/>;
 
         return (
 
@@ -201,17 +204,20 @@ class Outlets extends Component {
                         <div className="row mb-2">
                             <div className="col-sm-6">
                                 <h1 className="m-0">Outlets</h1>
-                            </div>{/* /.col */}
+                            </div>
+                            {/* /.col */}
 
-                        </div>{/* /.row */}
-                    </div>{/* /.container-fluid */}
+                        </div>
+                        {/* /.row */}
+                    </div>
+                    {/* /.container-fluid */}
                 </div>
                 <section className="content">
                     <div className="container-fluid">
                         <div className="row">
                             <div className="col-12">
                                 {/* card start */}
-                                <div className="card card-success shadow-lg" style={{ "minHeight": "800px" }}>
+                                <div className="card card-success shadow-lg" style={{"minHeight": "800px"}}>
                                     <div className="card-header card-header-content">
                                         <AppButton
                                             isLoading={this.props.isLoading}
@@ -260,7 +266,7 @@ class Outlets extends Component {
                 ></AppModal>
                 {this.props.showFormSuccess ? (<AppSwalSuccess
                     show={this.props.showFormSuccess}
-                    title={<div dangerouslySetInnerHTML={{ __html: this.props.contentMsg }} />}
+                    title={<div dangerouslySetInnerHTML={{__html: this.props.contentMsg}}/>}
                     type={this.props.tipeSWAL}
                     handleClose={this.props.isError ? this.props.closeSwalError : this.props.closeSwal}
                 >
@@ -268,15 +274,15 @@ class Outlets extends Component {
             </div>
 
 
-
         )
     }
 }
+
 const mapStateToProps = (state) => ({
     data: state.outlets.data || [],
-    totalData:state.outlets.totalData,
+    totalData: state.outlets.totalData,
     isError: state.outlets.isError,
-    isLoading:state.outlets.isLoading,
+    isLoading: state.outlets.isLoading,
     isAddLoading: state.outlets.isAddLoading,
     errorPriority: state.outlets.errorPriority || null,
     contentMsg: state.outlets.contentMsg || null,

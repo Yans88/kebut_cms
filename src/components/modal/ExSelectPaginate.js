@@ -1,7 +1,7 @@
-import React, { useState } from "react";
+import React, {useState} from "react";
 import Select from "react-select";
 import AsyncSelect from "react-select/async";
-import { AsyncPaginate } from "react-select-async-paginate";
+import {AsyncPaginate} from "react-select-async-paginate";
 import ProductService from '../../products/ProductService'
 
 const wait = () => {
@@ -52,7 +52,7 @@ export const MyAsyncSelect = props => {
             loadOptions={props.getAsyncData} // function that executes HTTP request and returns array of options
             placeholder={"Select...."}
             defaultOptions // load on render
-        // defaultOptions={[id: 0, label: "Loading..."]} // uncomment this to load on input change
+            // defaultOptions={[id: 0, label: "Loading..."]} // uncomment this to load on input change
         />
     );
 };
@@ -72,7 +72,7 @@ export const MySelectLoading = props => {
     return (
         <Select
             onFocus={handleFocus}
-            options={props.options || [{ value: 0, label: "Loading..." }]}
+            options={props.options || [{value: 0, label: "Loading..."}]}
             placeholder={loading ? "Loading options..." : "Select...."}
             isDisabled={loading}
         />
@@ -90,13 +90,13 @@ export const MyAsyncSelectLoading = props => {
                 .then(todos => {
                     console.log(todos);
                     return todos
-                        .map(todo => ({ value: todo.id_product, label: todo.product_name }));
+                        .map(todo => ({value: todo.id_product, label: todo.product_name}));
 
                 });
         });
     };
 
-    const getData = (search, loadedOptions, { page }) => {
+    const getData = (search, loadedOptions, {page}) => {
         let param = {
             per_page: 10,
             page_number: page,
@@ -123,7 +123,7 @@ export const MyAsyncSelectLoading = props => {
             additional={{
                 page: 1
             }}
-        // isDisabled={loading} // uncomment this to disable dropdown until options loaded
+            // isDisabled={loading} // uncomment this to disable dropdown until options loaded
         />
     );
 };

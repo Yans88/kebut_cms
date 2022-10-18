@@ -1,4 +1,4 @@
-import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
+import {createAsyncThunk, createSlice} from '@reduxjs/toolkit';
 import axios from 'axios';
 
 const API_URL = process.env.REACT_APP_URL_API;
@@ -183,7 +183,7 @@ export const citySlice = createSlice({
         }
     },
     extraReducers: {
-        [fetchData.fulfilled]: (state, { payload }) => {
+        [fetchData.fulfilled]: (state, {payload}) => {
             state.totalData = payload.totalData;
             state.data = payload.data;
             state.provinsi_name = payload.provinsi_name;
@@ -191,7 +191,7 @@ export const citySlice = createSlice({
             state.isError = false;
             //return state;
         },
-        [fetchData.rejected]: (state, { payload }) => {
+        [fetchData.rejected]: (state, {payload}) => {
             //console.log('payload', payload);
             state.isLoading = false;
             state.isError = true;
@@ -209,7 +209,7 @@ export const citySlice = createSlice({
             state.isAddLoading = false;
             state.contentMsg = "<div style='font-size:20px; text-align:center;'><strong>Success</strong>, Data berhasil disimpan</div>";
         },
-        [addData.rejected]: (state, { payload }) => {
+        [addData.rejected]: (state, {payload}) => {
             console.log(payload);
             state.isAddLoading = payload !== undefined ? payload.isAddLoading : false;
             state.showFormSuccess = payload !== undefined ? payload.showFormSuccess : true;
@@ -230,7 +230,7 @@ export const citySlice = createSlice({
             state.isAddLoading = false;
             state.contentMsg = "<div style='font-size:20px; text-align:center;'><strong>Success</strong>, Data berhasil dihapus</div>";
         },
-        [deleteData.rejected]: (state, { payload }) => {
+        [deleteData.rejected]: (state, {payload}) => {
             state.isAddLoading = payload !== undefined ? payload.isAddLoading : false;
             state.showFormSuccess = payload !== undefined ? payload.showFormSuccess : true;
             state.showFormDelete = payload !== undefined ? payload.showFormDelete : false;
@@ -245,5 +245,5 @@ export const citySlice = createSlice({
     }
 })
 
-export const { addForm, clearError, confirmDel, closeForm } = citySlice.actions;
+export const {addForm, clearError, confirmDel, closeForm} = citySlice.actions;
 export const userSelector = (state) => state.city;

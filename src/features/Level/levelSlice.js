@@ -1,4 +1,4 @@
-import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
+import {createAsyncThunk, createSlice} from '@reduxjs/toolkit';
 import axios from 'axios';
 
 const API_URL = process.env.REACT_APP_URL_API;
@@ -12,7 +12,7 @@ export const fetchData = createAsyncThunk(
             let _data = response;
             let res = {};
             if (response.status === 200) {
-                let dataa = _data.data;               
+                let dataa = _data.data;
                 data = dataa.data;
                 if (dataa.err_code === '00') {
                     res = {
@@ -179,7 +179,7 @@ export const levelSlice = createSlice({
         }
     },
     extraReducers: {
-        [fetchData.fulfilled]: (state, { payload }) => {
+        [fetchData.fulfilled]: (state, {payload}) => {
             state.totalData = payload.totalData;
             state.data = payload.data;
             state.isLoading = false;
@@ -187,7 +187,7 @@ export const levelSlice = createSlice({
             //state.showFormSuccess = false;
             //return state;
         },
-        [fetchData.rejected]: (state, { payload }) => {
+        [fetchData.rejected]: (state, {payload}) => {
             //console.log('payload', payload);
             state.isLoading = false;
             state.isError = true;
@@ -204,7 +204,7 @@ export const levelSlice = createSlice({
             state.isAddLoading = false;
             state.contentMsg = "<div style='font-size:20px; text-align:center;'><strong>Success</strong>, Data berhasil disimpan</div>";
         },
-        [addData.rejected]: (state, { payload }) => {
+        [addData.rejected]: (state, {payload}) => {
             console.log(payload);
             state.isAddLoading = payload !== undefined ? payload.isAddLoading : false;
             state.showFormSuccess = payload !== undefined ? payload.showFormSuccess : true;
@@ -225,7 +225,7 @@ export const levelSlice = createSlice({
             state.isAddLoading = false;
             state.contentMsg = "<div style='font-size:20px; text-align:center;'><strong>Success</strong>, Data berhasil dihapus</div>";
         },
-        [deleteData.rejected]: (state, { payload }) => {
+        [deleteData.rejected]: (state, {payload}) => {
             state.isAddLoading = payload !== undefined ? payload.isAddLoading : false;
             state.showFormSuccess = payload !== undefined ? payload.showFormSuccess : true;
             state.showFormDelete = payload !== undefined ? payload.showFormDelete : false;
@@ -240,6 +240,6 @@ export const levelSlice = createSlice({
     }
 })
 
-export const { addForm, clearError, confirmDel, closeForm } = levelSlice.actions;
+export const {addForm, clearError, confirmDel, closeForm} = levelSlice.actions;
 export const userSelector = (state) => state.level;
 //export default mainSlice.reducer;

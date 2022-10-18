@@ -1,4 +1,4 @@
-import React, { Component } from 'react'
+import React, {Component} from 'react'
 
 export default class PageLoading extends Component {
     render() {
@@ -12,10 +12,13 @@ export default class PageLoading extends Component {
                             <div className="row mb-2">
                                 <div className="col-sm-6">
                                     <h1 className="m-0">Loading ....</h1>
-                                </div>{/* /.col */}
+                                </div>
+                                {/* /.col */}
 
-                            </div>{/* /.row */}
-                        </div>{/* /.container-fluid */}
+                            </div>
+                            {/* /.row */}
+                        </div>
+                        {/* /.container-fluid */}
                     </div>
                     {/* /.content-header */}
                     {/* Main content */}
@@ -24,7 +27,7 @@ export default class PageLoading extends Component {
                             <div className="row">
                                 <div className="col-12">
                                     {/* card start */}
-                                    <div className="card shadow-lg" style={{ "height": "670px" }}>
+                                    <div className="card shadow-lg" style={{"height": "670px"}}>
                                         <div className="card-body my-card-body">
                                             <div id="loader"></div>
                                             Loading ...

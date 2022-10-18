@@ -1,11 +1,11 @@
-import React, { Component, Fragment } from 'react'
-import { Breadcrumb, Form } from 'react-bootstrap';
-import { connect } from 'react-redux';
-import { fetchData, addForm, addData, clearError, confirmDel, closeForm, deleteData } from './kelSlice'
+import React, {Component, Fragment} from 'react'
+import {Breadcrumb, Form} from 'react-bootstrap';
+import {connect} from 'react-redux';
+import {addData, addForm, clearError, closeForm, confirmDel, deleteData, fetchData} from './kelSlice'
 import ReactDatatable from '@ashvin27/react-datatable';
 import AppModal from '../../components/modal/MyModal';
 import AppButton from '../../components/button/Button';
-import { AppSwalSuccess } from '../../components/modal/SwalSuccess';
+import {AppSwalSuccess} from '../../components/modal/SwalSuccess';
 
 class Kel extends Component {
 
@@ -47,7 +47,7 @@ class Kel extends Component {
                 id_kec: selectedId
             }
         });
-        const queryString = { ...this.state, id_kec: selectedId }
+        const queryString = {...this.state, id_kec: selectedId}
         this.props.onLoad(queryString);
     };
 
@@ -82,7 +82,7 @@ class Kel extends Component {
     }
 
     handleChange(event) {
-        const { name, value } = event.target
+        const {name, value} = event.target
         this.setState({
             loadingForm: false,
             selected: {
@@ -90,14 +90,24 @@ class Kel extends Component {
                 [name]: value
             }
         });
-        this.setState({ errMsg: this.initSelected });
+        this.setState({errMsg: this.initSelected});
         this.props.resetError();
-        if (!this.state.selected.id_operator) this.setState({ selected: { ...this.state.selected, id_operator: this.props.user.id_operator } });
+        if (!this.state.selected.id_operator) this.setState({
+            selected: {
+                ...this.state.selected,
+                id_operator: this.props.user.id_operator
+            }
+        });
     }
 
     discardChanges = () => {
-        this.setState({ errMsg: {}, selected: this.initSelected, loadingForm: false });
-        if (!this.state.selected.id_operator) this.setState({ selected: { ...this.state.selected, id_operator: this.props.user.id_operator } });
+        this.setState({errMsg: {}, selected: this.initSelected, loadingForm: false});
+        if (!this.state.selected.id_operator) this.setState({
+            selected: {
+                ...this.state.selected,
+                id_operator: this.props.user.id_operator
+            }
+        });
         this.props.showForm();
     }
 
@@ -105,14 +115,14 @@ class Kel extends Component {
         this.setState({
             loadingForm: false,
             errMsg: this.initSelected,
-            selected: { ...record, id_operator: this.props.user.id_operator }
+            selected: {...record, id_operator: this.props.user.id_operator}
         });
         this.props.showForm(true);
     }
 
     deleteRecord = (record) => {
         this.setState({
-            selected: { ...record, id_operator: this.props.user.id_operator }
+            selected: {...record, id_operator: this.props.user.id_operator}
         });
         this.props.showConfirmDel(true);
     }
@@ -126,9 +136,14 @@ class Kel extends Component {
         errors.kode_kel = !this.state.selected.kode_kel ? "Required" : '';
         errors.nama_kel = !this.state.selected.nama_kel ? "Required" : '';
         errors.kode_pos = !this.state.selected.kode_pos ? "Required" : '';
-        if (!this.state.selected.id_operator) this.setState({ selected: { ...this.state.selected, id_operator: this.props.user.id_operator } });
+        if (!this.state.selected.id_operator) this.setState({
+            selected: {
+                ...this.state.selected,
+                id_operator: this.props.user.id_operator
+            }
+        });
 
-        this.setState({ errors });
+        this.setState({errors});
         if (this.validateForm(this.state.errMsg)) {
             this.props.onAdd(this.state.selected);
         } else {
@@ -159,8 +174,8 @@ class Kel extends Component {
 
     render() {
         const getBasename = path => path.substr(0, path.lastIndexOf('/'));
-        const { data, provinsiName, cityName, kecName } = this.props;
-        const { selected, errMsg } = this.state;
+        const {data, provinsiName, cityName, kecName} = this.props;
+        const {selected, errMsg} = this.state;
         const columns = [
             {
                 key: "no",
@@ -168,7 +183,8 @@ class Kel extends Component {
                 width: 20,
                 align: "center",
                 sortable: false,
-                cell: (row, index) => <div style={{ textAlign: "center" }}>{((this.state.page_number - 1) * this.state.per_page) + index + 1 + '.'}</div>,
+                cell: (row, index) => <div
+                    style={{textAlign: "center"}}>{((this.state.page_number - 1) * this.state.per_page) + index + 1 + '.'}</div>,
                 row: 0
             },
             {
@@ -201,18 +217,18 @@ class Kel extends Component {
                 sortable: false,
                 cell: record => {
                     return (
-                        <div style={{ textAlign: "center" }}>
+                        <div style={{textAlign: "center"}}>
                             <Fragment>
-                                <button                                    
+                                <button
                                     className="btn btn-info btn-xs"
                                     onClick={(e) => this.MappingArea(record)}
-                                    style={{ marginRight: '5px' }}>
+                                    style={{marginRight: '5px'}}>
                                     <i className="fa fa-list"></i> Mapping Kelurahan
                                 </button>
                                 <button
                                     className="btn btn-xs btn-success"
                                     onClick={e => this.editRecord(record)}
-                                    style={{ marginRight: '5px' }}>
+                                    style={{marginRight: '5px'}}>
                                     <i className="fa fa-edit"></i> Edit
                                 </button>
                                 <button
@@ -255,7 +271,7 @@ class Kel extends Component {
                     type="text"
                     value={selected.kode_kel ? selected.kode_kel : ''}
                     onChange={this.handleChange.bind(this)}
-                    placeholder="Kode" />
+                    placeholder="Kode"/>
             </Form.Group>
             <Form.Group controlId="kode_pos">
                 <Form.Label>Kode Pos</Form.Label>
@@ -270,7 +286,7 @@ class Kel extends Component {
                     type="text"
                     value={selected.kode_pos ? selected.kode_pos : ''}
                     onChange={this.handleChange.bind(this)}
-                    placeholder="Kode Pos" />
+                    placeholder="Kode Pos"/>
             </Form.Group>
             <Form.Group controlId="nama_kel">
                 <Form.Label>Kelurahan</Form.Label>
@@ -284,11 +300,12 @@ class Kel extends Component {
                     type="text"
                     value={selected.nama_kel}
                     onChange={this.handleChange.bind(this)}
-                    placeholder="Kelurahan" />
+                    placeholder="Kelurahan"/>
             </Form.Group>
         </Form>;
 
-        const contentDelete = <div dangerouslySetInnerHTML={{ __html: '<div id="caption" style="padding-bottom:20px;">Apakah anda yakin <br/>akan menghapus data ini ?</div>' }} />;
+        const contentDelete = <div
+            dangerouslySetInnerHTML={{__html: '<div id="caption" style="padding-bottom:20px;">Apakah anda yakin <br/>akan menghapus data ini ?</div>'}}/>;
         return (
 
             <div className="content-wrapper">
@@ -297,27 +314,33 @@ class Kel extends Component {
                         <div className="row mb-2">
                             <div className="col-sm-6">
                                 <h1 className="m-0">Kelurahan</h1>
-                            </div>{/* /.col */}
+                            </div>
+                            {/* /.col */}
                             {provinsiName ? (
                                 <div className="col-sm-6">
 
                                     <Breadcrumb className="float-right">
-                                        <Breadcrumb.Item href={getBasename(window.location.pathname) + "/provinsi"}>Provinsi</Breadcrumb.Item>
-                                        <Breadcrumb.Item href={getBasename(window.location.pathname) + "/city"}>{provinsiName}</Breadcrumb.Item>
-                                        <Breadcrumb.Item href={getBasename(window.location.pathname) + "/kecamatan"}>{cityName}</Breadcrumb.Item>
+                                        <Breadcrumb.Item
+                                            href={getBasename(window.location.pathname) + "/provinsi"}>Provinsi</Breadcrumb.Item>
+                                        <Breadcrumb.Item
+                                            href={getBasename(window.location.pathname) + "/city"}>{provinsiName}</Breadcrumb.Item>
+                                        <Breadcrumb.Item
+                                            href={getBasename(window.location.pathname) + "/kecamatan"}>{cityName}</Breadcrumb.Item>
                                         <Breadcrumb.Item active>{kecName}</Breadcrumb.Item>
                                     </Breadcrumb>
                                 </div>) : ''}
 
-                        </div>{/* /.row */}
-                    </div>{/* /.container-fluid */}
+                        </div>
+                        {/* /.row */}
+                    </div>
+                    {/* /.container-fluid */}
                 </div>
                 <section className="content">
                     <div className="container-fluid">
                         <div className="row">
                             <div className="col-12">
                                 {/* card start */}
-                                <div className="card card-success shadow-lg" style={{ "minHeight": "800px" }}>
+                                <div className="card card-success shadow-lg" style={{"minHeight": "800px"}}>
                                     <div className="card-header card-header-content">
                                         <AppButton
                                             isLoading={this.props.isLoading}
@@ -378,7 +401,7 @@ class Kel extends Component {
                 ></AppModal>
                 {this.props.showFormSuccess ? (<AppSwalSuccess
                     show={this.props.showFormSuccess}
-                    title={<div dangerouslySetInnerHTML={{ __html: this.props.contentMsg }} />}
+                    title={<div dangerouslySetInnerHTML={{__html: this.props.contentMsg}}/>}
                     type={this.props.tipeSWAL}
                     handleClose={this.props.isError ? this.props.closeSwalError : this.handleCloseSwal.bind(this)}
                 >
@@ -386,10 +409,10 @@ class Kel extends Component {
             </div>
 
 
-
         )
     }
 }
+
 const mapStateToProps = (state) => ({
     data: state.kelurahan.data || [],
     totalData: state.kelurahan.totalData,

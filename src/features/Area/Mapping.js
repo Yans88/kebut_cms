@@ -1,7 +1,7 @@
-import React, { Component, Fragment } from 'react'
-import { Breadcrumb, Form } from 'react-bootstrap';
-import { connect } from 'react-redux';
-import { fetchData, addData, setData } from './mappingAreaSlice'
+import React, {Component, Fragment} from 'react'
+import {Breadcrumb, Form} from 'react-bootstrap';
+import {connect} from 'react-redux';
+import {addData, fetchData, setData} from './mappingAreaSlice'
 import ReactDatatable from '@ashvin27/react-datatable';
 
 class Mapping extends Component {
@@ -43,7 +43,7 @@ class Mapping extends Component {
                 id_kelurahan: selectedId
             }
         });
-        const queryString = { ...this.state, id_kelurahan: selectedId }
+        const queryString = {...this.state, id_kelurahan: selectedId}
         this.props.onLoad(queryString);
     };
 
@@ -91,9 +91,9 @@ class Mapping extends Component {
         this.props.onAdd(param);
         dt.map((x, key) => {
             if (x.id_kel_destination === record.id_kel_destination) {
-                _dt = { ...x, status: !this.props.isError ? isActive : record.status }
+                _dt = {...x, status: !this.props.isError ? isActive : record.status}
             } else {
-                _dt = { ...x };
+                _dt = {...x};
             }
             dtt[key] = _dt;
             return dtt;
@@ -103,7 +103,7 @@ class Mapping extends Component {
 
     render() {
         const getBasename = path => path.substr(0, path.lastIndexOf('/'));
-        const { data, provinsiName, cityName, kecName, kelName } = this.props;
+        const {data, provinsiName, cityName, kecName, kelName} = this.props;
 
         const columns = [
             {
@@ -112,7 +112,8 @@ class Mapping extends Component {
                 width: 20,
                 align: "center",
                 sortable: false,
-                cell: (row, index) => <div style={{ textAlign: "center" }}>{((this.state.page_number - 1) * this.state.per_page) + index + 1 + '.'}</div>,
+                cell: (row, index) => <div
+                    style={{textAlign: "center"}}>{((this.state.page_number - 1) * this.state.per_page) + index + 1 + '.'}</div>,
                 row: 0
             },
             {
@@ -145,7 +146,7 @@ class Mapping extends Component {
                 sortable: false,
                 cell: record => {
                     return (
-                        <div style={{ textAlign: "center" }}>
+                        <div style={{textAlign: "center"}}>
                             <Fragment>
                                 <Form.Check
                                     id={record.id_kel_destination}
@@ -184,28 +185,35 @@ class Mapping extends Component {
                         <div className="row mb-2">
                             <div className="col-sm-6">
                                 <h1 className="m-0">Mapping Kelurahan</h1>
-                            </div>{/* /.col */}
+                            </div>
+                            {/* /.col */}
                             {provinsiName ? (
                                 <div className="col-sm-6">
 
                                     <Breadcrumb className="float-right">
-                                        <Breadcrumb.Item href={getBasename(window.location.pathname) + "/provinsi"}>Provinsi</Breadcrumb.Item>
-                                        <Breadcrumb.Item href={getBasename(window.location.pathname) + "/city"}>{provinsiName}</Breadcrumb.Item>
-                                        <Breadcrumb.Item href={getBasename(window.location.pathname) + "/kecamatan"}>{cityName}</Breadcrumb.Item>
-                                        <Breadcrumb.Item href={getBasename(window.location.pathname) + "/kelurahan"}>{kecName}</Breadcrumb.Item>
+                                        <Breadcrumb.Item
+                                            href={getBasename(window.location.pathname) + "/provinsi"}>Provinsi</Breadcrumb.Item>
+                                        <Breadcrumb.Item
+                                            href={getBasename(window.location.pathname) + "/city"}>{provinsiName}</Breadcrumb.Item>
+                                        <Breadcrumb.Item
+                                            href={getBasename(window.location.pathname) + "/kecamatan"}>{cityName}</Breadcrumb.Item>
+                                        <Breadcrumb.Item
+                                            href={getBasename(window.location.pathname) + "/kelurahan"}>{kecName}</Breadcrumb.Item>
                                         <Breadcrumb.Item active>{kelName}</Breadcrumb.Item>
                                     </Breadcrumb>
                                 </div>) : ''}
 
-                        </div>{/* /.row */}
-                    </div>{/* /.container-fluid */}
+                        </div>
+                        {/* /.row */}
+                    </div>
+                    {/* /.container-fluid */}
                 </div>
                 <section className="content">
                     <div className="container-fluid">
                         <div className="row">
                             <div className="col-12">
                                 {/* card start */}
-                                <div className="card card-success shadow-lg" style={{ "minHeight": "800px" }}>
+                                <div className="card card-success shadow-lg" style={{"minHeight": "800px"}}>
                                     {/*  <div className="card-header card-header-content">
                                        
 
@@ -235,10 +243,10 @@ class Mapping extends Component {
             </div>
 
 
-
         )
     }
 }
+
 const mapStateToProps = (state) => ({
     data: state.mappingArea.data || [],
     totalData: state.mappingArea.totalData,

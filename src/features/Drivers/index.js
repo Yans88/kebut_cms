@@ -1,11 +1,11 @@
-import React, { Component, Fragment } from 'react'
-import { connect } from 'react-redux';
-import { fetchData, setStatus, clearError, showConfirm, closeForm } from './driversSlice'
+import React, {Component, Fragment} from 'react'
+import {connect} from 'react-redux';
+import {clearError, closeForm, fetchData, setStatus, showConfirm} from './driversSlice'
 import ReactDatatable from '@ashvin27/react-datatable';
-import { Dropdown, Badge } from 'react-bootstrap';
-import { Icon } from 'rsuite';
+import {Badge} from 'react-bootstrap';
+import {Icon} from 'rsuite';
 import AppModal from '../../components/modal/MyModal';
-import { AppSwalSuccess } from '../../components/modal/SwalSuccess';
+import {AppSwalSuccess} from '../../components/modal/SwalSuccess';
 
 class Drivers extends Component {
 
@@ -24,7 +24,7 @@ class Drivers extends Component {
     }
 
     componentDidMount() {
-        if (!this.state.id_operator) this.setState({ id_operator: this.props.user.id_operator });
+        if (!this.state.id_operator) this.setState({id_operator: this.props.user.id_operator});
         this.props.onLoad(this.state);
     }
 
@@ -50,7 +50,7 @@ class Drivers extends Component {
     }
 
     showConfirm = async (record) => {
-        if (!this.state.id_operator) this.setState({ id_operator: this.props.user.id_operator });
+        if (!this.state.id_operator) this.setState({id_operator: this.props.user.id_operator});
         var dt = {
             id_operator: this.state.id_operator ? this.state.id_operator : this.props.user.id_operator,
             status: record.status === 1 ? 2 : 1,
@@ -77,7 +77,7 @@ class Drivers extends Component {
     };
 
     render() {
-        const { data } = this.props;
+        const {data} = this.props;
 
         const columns = [
             {
@@ -86,7 +86,8 @@ class Drivers extends Component {
                 width: 20,
                 align: "center",
                 sortable: false,
-                cell: (row, index) => <div style={{ textAlign: "center" }}>{((this.state.page_number - 1) * this.state.per_page) + index + 1 + '.'}</div>,
+                cell: (row, index) => <div
+                    style={{textAlign: "center"}}>{((this.state.page_number - 1) * this.state.per_page) + index + 1 + '.'}</div>,
                 row: 0
             },
             {
@@ -95,7 +96,7 @@ class Drivers extends Component {
                 align: "center",
                 sortable: true
             },
-           
+
             {
                 key: "phone",
                 text: "Phone",
@@ -105,7 +106,9 @@ class Drivers extends Component {
                 cell: record => {
                     return (
                         <Fragment>
-                            {record.phone} {record.verify_phone === 1 && <Badge style={{ fontWeight: 500, fontSize: "65%" }} variant="success" className="float-right"><Icon style={{ color: '#ffffff' }} icon="check-square-o" size="lg" /> Verified</Badge>}
+                            {record.phone} {record.verify_phone === 1 &&
+                            <Badge style={{fontWeight: 500, fontSize: "65%"}} variant="success" className="float-right"><Icon
+                                style={{color: '#ffffff'}} icon="check-square-o" size="lg"/> Verified</Badge>}
                         </Fragment>)
                 }
             },
@@ -125,9 +128,9 @@ class Drivers extends Component {
                 cell: record => {
                     var status = record.status === 1 ? "Active" : "Inactive"
                     return (
-                        <div style={{ textAlign: "center" }}>
+                        <div style={{textAlign: "center"}}>
                             <Fragment>
-							{status}
+                                {status}
                             </Fragment>
                         </div>
                     );
@@ -157,17 +160,20 @@ class Drivers extends Component {
                         <div className="row mb-2">
                             <div className="col-sm-6">
                                 <h1 className="m-0">Drivers</h1>
-                            </div>{/* /.col */}
+                            </div>
+                            {/* /.col */}
 
-                        </div>{/* /.row */}
-                    </div>{/* /.container-fluid */}
+                        </div>
+                        {/* /.row */}
+                    </div>
+                    {/* /.container-fluid */}
                 </div>
                 <section className="content">
                     <div className="container-fluid">
                         <div className="row">
                             <div className="col-12">
                                 {/* card start */}
-                                <div className="card card-success shadow-lg" style={{ "minHeight": "800px" }}>
+                                <div className="card card-success shadow-lg" style={{"minHeight": "800px"}}>
 
                                     <div className="card-body">
                                         {data ? (
@@ -192,7 +198,7 @@ class Drivers extends Component {
                 <AppModal
                     show={this.props.dt.showFormConfirm}
                     size="xs"
-                    form={<div dangerouslySetInnerHTML={{ __html: this.props.dt.contentConfirm }} />}
+                    form={<div dangerouslySetInnerHTML={{__html: this.props.dt.contentConfirm}}/>}
                     handleClose={this.handleClose}
                     backdrop="static"
                     keyboard={false}
@@ -204,7 +210,7 @@ class Drivers extends Component {
                 ></AppModal>
                 {this.props.showFormSuccess ? (<AppSwalSuccess
                     show={this.props.showFormSuccess}
-                    title={<div dangerouslySetInnerHTML={{ __html: this.props.contentMsg }} />}
+                    title={<div dangerouslySetInnerHTML={{__html: this.props.contentMsg}}/>}
                     type={this.props.tipeSWAL}
                     handleClose={this.props.isError ? this.props.closeSwalError : this.props.closeSwal}
                 >
@@ -212,13 +218,13 @@ class Drivers extends Component {
             </div>
 
 
-
         )
     }
 }
+
 const mapStateToProps = (state) => ({
     dt: state.drivers.dt || {},
-    totalData:state.drivers.totalData,
+    totalData: state.drivers.totalData,
     data: state.drivers.data || [],
     isError: state.drivers.isError,
     isLoading: state.drivers.isLoading,

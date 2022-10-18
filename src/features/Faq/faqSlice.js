@@ -1,4 +1,4 @@
-import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
+import {createAsyncThunk, createSlice} from '@reduxjs/toolkit';
 import axios from 'axios';
 
 const API_URL = process.env.REACT_APP_URL_API;
@@ -203,7 +203,7 @@ export const faqSlice = createSlice({
             state.errorPriority = false;
             return state;
         },
-        chgProps: (state, { payload }) => {
+        chgProps: (state, {payload}) => {
             state.dataId[payload.key] = payload.value;
         },
         resetForm: (state) => {
@@ -215,7 +215,7 @@ export const faqSlice = createSlice({
         },
     },
     extraReducers: {
-        [fetchData.fulfilled]: (state, { payload }) => {
+        [fetchData.fulfilled]: (state, {payload}) => {
             state.totalData = payload.totalData;
             state.data = payload.data;
             state.isLoading = false;
@@ -223,7 +223,7 @@ export const faqSlice = createSlice({
             state.dataId = {};
             //return state;
         },
-        [fetchData.rejected]: (state, { payload }) => {
+        [fetchData.rejected]: (state, {payload}) => {
             state.totalData = 0;
             state.data = [];
             state.isLoading = false;
@@ -235,13 +235,13 @@ export const faqSlice = createSlice({
             state.data = [];
             state.isLoading = true;
         },
-        [fetchDataById.fulfilled]: (state, { payload }) => {
+        [fetchDataById.fulfilled]: (state, {payload}) => {
             state.dataId = payload;
             state.isLoading = false;
             state.isError = false;
             //return state;
         },
-        [fetchDataById.rejected]: (state, { payload }) => {
+        [fetchDataById.rejected]: (state, {payload}) => {
             //console.log('payload', payload);
             state.isLoading = false;
             state.isError = true;
@@ -258,7 +258,7 @@ export const faqSlice = createSlice({
             state.isAddLoading = false;
             state.contentMsg = "<div style='font-size:20px; text-align:center;'><strong>Success</strong>, Data berhasil disimpan</div>";
         },
-        [addData.rejected]: (state, { payload }) => {
+        [addData.rejected]: (state, {payload}) => {
             console.log(payload);
             state.isAddLoading = payload !== undefined ? payload.isAddLoading : false;
             state.showFormSuccess = payload !== undefined ? payload.showFormSuccess : true;
@@ -279,7 +279,7 @@ export const faqSlice = createSlice({
             state.isAddLoading = false;
             state.contentMsg = "<div style='font-size:20px; text-align:center;'><strong>Success</strong>, Data berhasil dihapus</div>";
         },
-        [deleteData.rejected]: (state, { payload }) => {
+        [deleteData.rejected]: (state, {payload}) => {
             state.isAddLoading = payload !== undefined ? payload.isAddLoading : false;
             state.showFormSuccess = payload !== undefined ? payload.showFormSuccess : true;
             state.showFormDelete = payload !== undefined ? payload.showFormDelete : false;
@@ -294,5 +294,5 @@ export const faqSlice = createSlice({
     }
 })
 
-export const { clearError, confirmDel, closeForm, chgProps, resetForm } = faqSlice.actions;
+export const {clearError, confirmDel, closeForm, chgProps, resetForm} = faqSlice.actions;
 export const userSelector = (state) => state.faq;
