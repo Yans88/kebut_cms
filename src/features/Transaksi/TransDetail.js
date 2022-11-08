@@ -251,7 +251,7 @@ class TransDetail extends Component {
                                                         <td width="25%">{dtRes.nama_member}</td>
                                                         <td width="12%"><strong>Pengiriman</strong></td>
                                                         <td width="1%"><strong>:</strong></td>
-                                                        <td width="20%">{dtRes.tipe_pengantaran === 1 ? 'Instant' : 'Sameday'}</td>
+                                                        <td width="20%">{dtRes.nama_cargo}</td>
                                                     </tr>
                                                     <tr>
                                                         <td><strong>Status</strong></td>
@@ -275,7 +275,7 @@ class TransDetail extends Component {
                                                     <tr>
                                                         <td><strong>Driver</strong></td>
                                                         <td><strong>:</strong></td>
-                                                        <td></td>
+                                                        <td>{dtRes.nama_driver ? dtRes.nama_driver : '-'}</td>
                                                         <td><strong>Phone</strong></td>
                                                         <td><strong>:</strong></td>
                                                         <td>{dtRes.phone_member}</td>
@@ -288,24 +288,20 @@ class TransDetail extends Component {
                                                         <td><strong>Phone Driver</strong></td>
                                                         <td><strong>:</strong></td>
                                                         <td>{dtRes.driver_phone ? dtRes.driver_phone : '-'}</td>
-                                                        <td><strong>Device ID</strong></td>
+                                                        <td><strong>Provinsi</strong></td>
                                                         <td><strong>:</strong></td>
-                                                        <td>{dtRes.deviceID ? dtRes.deviceID : '-'}</td>
+                                                        <td>{dtRes.provinsi_pickup ? dtRes.provinsi_pickup : '-'}</td>
                                                         <td><strong>Pickup Date</strong></td>
                                                         <td><strong>:</strong></td>
-                                                        <td>{dtRes.pickup_date ? moment(new Date(dtRes.pickup_date)).format('DD MMMM YYYY HH:mm') : '-'}</td>
+                                                        <td>{dtRes.tgl_barang_diambil ? moment(new Date(dtRes.tgl_barang_diambil)).format('DD MMMM YYYY HH:mm') : '-'}</td>
 
                                                     </tr>
 
-                                                    <tr>
-                                                        <td><strong>Note untuk driver</strong></td>
-                                                        <td><strong>:</strong></td>
-                                                        <td colSpan="7">{dtRes.note_utk_driver ? dtRes.note_utk_driver : '-'}</td>
-                                                    </tr>
+
                                                     <tr>
                                                         <td><strong>Alamat Penjemputan Paket</strong></td>
                                                         <td><strong>:</strong></td>
-                                                        <td colSpan="7">{dtRes.alamat_penjemputan ? dtRes.alamat_penjemputan : '-'}{dtRes.phone_pengirim ? ', ' + dtRes.phone_pengirim : ''}{'.(' + dtRes.titik_lat_penjemputan + ',' + dtRes.titik_long_penjemputan + ')'}</td>
+                                                        <td colSpan="7">{dtRes.lokasi_pickup ? dtRes.lokasi_pickup : '-'}{dtRes.phone_member ? ', ' + dtRes.phone_member : ''}{'.(' + dtRes.latitude_pickup + ',' + dtRes.longitude_pickup + ')'}</td>
                                                     </tr>
                                                 </Fragment>
                                             )}
@@ -327,11 +323,11 @@ class TransDetail extends Component {
                                             <tr>
                                                 <th style={{width: 40, textAlign: 'center'}}>No.</th>
                                                 <th style={{width: 200, textAlign: 'center'}}>Tujuan</th>
-                                                <th style={{width: 150, textAlign: 'center'}}>Kategory</th>
-                                                <th style={{width: 150, textAlign: 'center'}}>Packaging</th>
-                                                <th style={{width: 120, textAlign: 'center'}}>Ukuran</th>
-                                                <th style={{width: 200, textAlign: 'center'}}>Deskripsi</th>
-                                                <th style={{"textAlign": "center", width: 100}}>Price Packaging</th>
+                                                <th style={{width: 150, textAlign: 'center'}}>Deskripsi Barang</th>
+                                                <th style={{width: 150, textAlign: 'center'}}>Harga Barang</th>
+                                                <th style={{width: 120, textAlign: 'center'}}>Asuransi</th>
+                                                <th style={{width: 200, textAlign: 'center'}}>Bongkar Muat</th>
+                                                <th style={{"textAlign": "center", width: 100}}>Asuransi + Bongkar Muat</th>
 
                                             </tr>
                                             </thead>
@@ -383,26 +379,47 @@ class TransDetail extends Component {
                                                 </Fragment>
                                             ) : (
                                                 <Fragment>
-                                                    {dtRes.transaksi_detail ? dtRes.transaksi_detail.map((dt, i) => (
+                                                    {dtRes.list_pesanan ? dtRes.list_pesanan.map((dt, i) => (
 
                                                             <tr key={i}>
                                                                 <td align="center">{i + 1}.</td>
                                                                 {dt.status === 1 ? (
-                                                                    <td>{dt.penerima + ' - ' + dt.phone_penerima}<br/>{dt.alamat_penerima + '. (' + dt.titik_lat_antar + ',' + dt.titik_lat_antar + ')'}<br/><span
-                                                                        className="badge bg-info">Received date :{moment(new Date(dt.status_date)).format('DD MMMM YYYY HH:mm')}</span>
+                                                                    <td>{dt.nama_penerima + ' - ' + dt.hp_penerima}<br/>{dt.alamat_kirim + '. (' + dt.latitude_destination + ',' + dt.longitude_destination + ')'}<br/><span
+                                                                        className="badge bg-info">Received date :{moment(new Date(dt.tgl_barang_diserahkan)).format('DD MMMM YYYY HH:mm')}</span>
                                                                     </td>) : (
-                                                                    <td>{dt.penerima + ' - ' + dt.phone_penerima}<br/>{dt.alamat_penerima + '. (' + dt.titik_lat_antar + ',' + dt.titik_lat_antar + ')'}
+                                                                    <td>{dt.nama_penerima + ' - ' + dt.hp_penerima}<br/>{dt.alamat_kirim + '. (' + dt.latitude_destination + ',' + dt.longitude_destination + ')'}
                                                                     </td>)}
 
-                                                                <td>{dt.category_name}</td>
-                                                                <td>{dt.ap_name}</td>
-                                                                {dt.status === 1 ? (<td>{dt.ukuran_name}<br/><span
-                                                                    className="badge bg-warning">Temperatur : {dt.last_temp}&#8451;</span>
-                                                                </td>) : (<td>{dt.ukuran_name}</td>)}
-                                                                <td>{dt.deskripsi}</td>
+                                                                <td>{dt.deskripsi_barang}</td>
                                                                 <td align="right">
                                                                     <NumberFormat
-                                                                        value={dt.hrg_ap}
+                                                                        value={dt.hrg}
+                                                                        thousandSeparator={true}
+                                                                        decimalScale={2}
+                                                                        displayType={'text'}
+                                                                    />
+                                                                </td>
+
+                                                                <td align="right">
+                                                                    <NumberFormat
+                                                                        value={dt.nominal_biaya_asuransi}
+                                                                        thousandSeparator={true}
+                                                                        decimalScale={2}
+                                                                        displayType={'text'}
+                                                                    />
+                                                                </td>
+
+                                                                <td align="right">
+                                                                    <NumberFormat
+                                                                        value={dt.biaya_tambahan_bm}
+                                                                        thousandSeparator={true}
+                                                                        decimalScale={2}
+                                                                        displayType={'text'}
+                                                                    />
+                                                                </td>
+                                                                <td align="right">
+                                                                    <NumberFormat
+                                                                        value={Number(dt.nominal_biaya_asuransi) + Number(dt.biaya_tambahan_bm)}
                                                                         thousandSeparator={true}
                                                                         decimalScale={2}
                                                                         displayType={'text'}
@@ -416,11 +433,11 @@ class TransDetail extends Component {
                                                             <td colSpan="7">Data not found</td>
                                                         </tr>)}
                                                     <tr>
-                                                        <td align="right" colSpan="6" style={{border: "none"}}><strong>Total
-                                                            Packaging</strong></td>
+                                                        <td align="right" colSpan="6" style={{border: "none"}}><strong>
+                                                            Biaya Pengiriman</strong></td>
                                                         <td align="right">
                                                             <NumberFormat
-                                                                value={dtRes.ttl_hrg_ap}
+                                                                value={Number(dtRes.ttl_biaya) - Number(dtRes.kode_unik_transfer) - Number(dtRes.ttl_biaya_asuransi) + Number(dtRes.ttl_biaya_bm)}
                                                                 thousandSeparator={true}
                                                                 decimalScale={2}
                                                                 displayType={'text'}
@@ -428,35 +445,17 @@ class TransDetail extends Component {
                                                         </td>
                                                     </tr>
                                                     <tr>
-                                                        <td align="right" colSpan="6" style={{border: "none"}}><strong>Handling
-                                                            Fee</strong></td>
+                                                        <td align="right" colSpan="6" style={{border: "none"}}><strong>Kode Unik Transfer</strong></td>
                                                         <td align="right">
                                                             <NumberFormat
-                                                                value={dtRes.ttl_handling_fee}
+                                                                value={dtRes.kode_unik_transfer}
                                                                 thousandSeparator={true}
                                                                 decimalScale={2}
                                                                 displayType={'text'}
                                                             />
                                                         </td>
                                                     </tr>
-                                                    <tr>
-                                                        <td align="right" colSpan="6" style={{border: "none"}}>
-                                                            <strong>Ongkos Antar({dtRes.total_jarak} Km x <NumberFormat
-                                                                value={dtRes.ongkir_perkm}
-                                                                thousandSeparator={true}
-                                                                decimalScale={2}
-                                                                displayType={'text'}
-                                                            />)</strong>
-                                                        </td>
-                                                        <td align="right">
-                                                            <NumberFormat
-                                                                value={dtRes.ongkos_antar}
-                                                                thousandSeparator={true}
-                                                                decimalScale={2}
-                                                                displayType={'text'}
-                                                            />
-                                                        </td>
-                                                    </tr>
+
                                                     <tr>
                                                         <td align="right" colSpan="6"
                                                             style={{border: "none", color: "red"}}>
@@ -479,7 +478,7 @@ class TransDetail extends Component {
                                                             style={{"backgroundColor": "rgba(0,0,0,.04)"}}>
                                                             <strong>
                                                                 <NumberFormat
-                                                                    value={dtRes.total}
+                                                                    value={dtRes.ttl_biaya}
                                                                     thousandSeparator={true}
                                                                     decimalScale={2}
                                                                     displayType={'text'}

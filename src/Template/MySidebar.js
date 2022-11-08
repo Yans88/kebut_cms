@@ -170,7 +170,6 @@ class MySidebar extends Component {
                                         eventKey="5-3"> On Process
                                     </Dropdown.Item>
                                     <Dropdown.Item
-                                        disabled
                                         onSelect={e => this.handleMenu('completed')}
                                         componentClass={Link}
                                         to='/completed'

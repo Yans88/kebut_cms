@@ -18,7 +18,7 @@ class Completed extends Component {
             page_number: 1,
             per_page: 10,
             loadingForm: false,
-            status: 6,
+            status: 7,
         }
     }
 
