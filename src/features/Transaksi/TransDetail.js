@@ -327,7 +327,9 @@ class TransDetail extends Component {
                                                 <th style={{width: 150, textAlign: 'center'}}>Harga Barang</th>
                                                 <th style={{width: 120, textAlign: 'center'}}>Asuransi</th>
                                                 <th style={{width: 200, textAlign: 'center'}}>Bongkar Muat</th>
-                                                <th style={{"textAlign": "center", width: 100}}>Asuransi + Bongkar Muat</th>
+                                                <th style={{"textAlign": "center", width: 100}}>Asuransi + Bongkar
+                                                    Muat
+                                                </th>
 
                                             </tr>
                                             </thead>
@@ -445,7 +447,8 @@ class TransDetail extends Component {
                                                         </td>
                                                     </tr>
                                                     <tr>
-                                                        <td align="right" colSpan="6" style={{border: "none"}}><strong>Kode Unik Transfer</strong></td>
+                                                        <td align="right" colSpan="6" style={{border: "none"}}><strong>Kode
+                                                            Unik Transfer</strong></td>
                                                         <td align="right">
                                                             <NumberFormat
                                                                 value={dtRes.kode_unik_transfer}

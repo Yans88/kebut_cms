@@ -12,7 +12,7 @@ class Completed extends Component {
         super(props);
 
         this.state = {
-            sort_order: "ASC",
+            sort_order: "DESC",
             sort_column: "id_transaksi",
             keyword: '',
             page_number: 1,
