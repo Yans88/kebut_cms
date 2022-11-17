@@ -37,6 +37,7 @@ const OnProcess = React.lazy(() => import('./features/Transaksi/OnProcess'));
 const Completed = React.lazy(() => import('./features/Transaksi/Completed'));
 const TransDetail = React.lazy(() => import('./features/Transaksi/TransDetail'));
 const Drivers = React.lazy(() => import('./features/Drivers'));
+const DriverDetail = React.lazy(() => import('./features/Drivers/driverDetail'));
 
 const getBasename = path => path.substr(0, path.lastIndexOf('/'));
 
@@ -89,6 +90,7 @@ function App() {
                                 <Route exact path="/completed" component={Completed}/>
                                 <Route exact path="/trans_detail" component={TransDetail}/>
                                 <Route exact path="/drivers" component={Drivers}/>
+                                <Route exact path="/driver_detail" component={DriverDetail}/>
                             </React.Suspense>
                         </Main>
                     </ProtectedRoute>

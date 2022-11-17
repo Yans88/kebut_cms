@@ -37,6 +37,53 @@ export const fetchData = createAsyncThunk(
     }
 );
 
+export const fetchDataDetail = createAsyncThunk(
+    'transaksi/detail',
+    async (param, thunkAPI) => {
+        let res = {};
+        try {
+            const response = await axios.post(API_URL + '/detail_driver', param);
+            let _data = response;
+            if (response.status === 200) {
+                let dataa = _data.data;
+
+                if (dataa.err_code === '00') {
+                    return dataa;
+                } else {
+                    res = {
+                        isAddLoading: false,
+                        showFormSuccess: false,
+                        showFormConfirm: true,
+                        err_msg: dataa.err_msg,
+                        contentMsg: null,
+                    }
+                    return thunkAPI.rejectWithValue(res);
+                }
+            } else {
+                res = {
+                    isAddLoading: false,
+                    showFormSuccess: true,
+                    showFormConfirm: false,
+                    contentMsg: "<div style='font-size:20px; text-align:center;'><strong>Failed</strong>, Something wrong</div>",
+                    err_msg: null
+                }
+                console.log('Error', _data);
+                return thunkAPI.rejectWithValue(res);
+            }
+        } catch (e) {
+            res = {
+                isAddLoading: false,
+                showFormSuccess: true,
+                showFormConfirm: false,
+                contentMsg: "<div style='font-size:20px; text-align:center;'><strong>Failed</strong>, Something wrong</div>",
+                err_msg: null
+            }
+            console.log('Error catch', e.response.data);
+            return thunkAPI.rejectWithValue(res);
+        }
+    }
+);
+
 export const setStatus = createAsyncThunk(
     'drivers/setStatus',
     async (param, thunkAPI) => {
@@ -88,6 +135,7 @@ export const setStatus = createAsyncThunk(
 
 const initialState = {
     data: [],
+    dtRes: {},
     totalData: 0,
     isError: false,
     isLoading: false,
@@ -143,6 +191,23 @@ export const driversSlice = createSlice({
         [fetchData.pending]: (state) => {
             state.isLoading = true;
             state.showFormSuccess = false;
+        },
+        [fetchDataDetail.fulfilled]: (state, {payload}) => {
+            state.dtRes = payload.data;
+            state.isLoading = false;
+            state.isError = false;
+            state.contentMsg = null;
+            //return state;
+        },
+        [fetchDataDetail.pending]: (state) => {
+            state.isLoading = true;
+        },
+        [fetchDataDetail.rejected]: (state, {payload}) => {
+            //console.log('payload', payload);
+            state.dtRes = {};
+            state.isLoading = false;
+            state.isError = true;
+            state.errorMessage = payload !== undefined ? payload.err_msg : null;
         },
         [setStatus.fulfilled]: (state) => {
             state.isError = false;

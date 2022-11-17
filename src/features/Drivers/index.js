@@ -24,6 +24,7 @@ class Drivers extends Component {
     }
 
     componentDidMount() {
+        sessionStorage.removeItem('idDriverSelected');
         if (!this.state.id_operator) this.setState({id_operator: this.props.user.id_operator});
         this.props.onLoad(this.state);
     }
@@ -75,6 +76,11 @@ class Drivers extends Component {
         }
         this.props.onConfirm(dt);
     };
+
+    rowClickedHandler = async (event, data, rowIndex) => {
+        await sessionStorage.setItem('idDriverSelected', data.id_driver);
+        this.props.history.push("/driver_detail");
+    }
 
     render() {
         const {data} = this.props;
@@ -178,6 +184,7 @@ class Drivers extends Component {
                                     <div className="card-body">
                                         {data ? (
                                             <ReactDatatable
+                                                className="table table-striped table-hover table-bordered"
                                                 config={config}
                                                 records={data}
                                                 columns={columns}
@@ -185,6 +192,7 @@ class Drivers extends Component {
                                                 onChange={this.tableChangeHandler}
                                                 loading={this.props.isLoading}
                                                 total_record={this.props.totalData}
+                                                onRowClicked={this.rowClickedHandler}
                                             />
                                         ) : (<p>No Data ...</p>)}
 
